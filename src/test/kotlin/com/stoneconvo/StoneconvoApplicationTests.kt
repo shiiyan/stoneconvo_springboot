@@ -9,5 +9,4 @@ class StoneconvoApplicationTests {
 	@Test
 	fun contextLoads() {
 	}
-
 }
