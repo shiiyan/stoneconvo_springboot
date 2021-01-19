@@ -50,23 +50,19 @@ jooq {
 						name = "org.jooq.meta.mysql.MySQLDatabase"
 						includes = ".*"
 						excludes = ""
-						forcedTypes.addAll(arrayOf(
-							org.jooq.meta.jaxb.ForcedType()
-								.withName("varchar")
-								.withIncludeExpression(".*")
-								.withIncludeTypes("JSONB?"),
-							org.jooq.meta.jaxb.ForcedType()
-								.withName("varchar")
-								.withIncludeExpression(".*")
-								.withIncludeTypes("INET")
-						).toList())
+						inputSchema = "stoneconvo_dev"
+					}
+					generate.apply {
+						isJavaTimeTypes = true
+						isRecords = true
+						isDaos = true
 					}
 					target.apply {
 						packageName = "com.stoneconvo.codegen"
+						isClean = true
 					}
-					strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
+					strategy.name = "org.jooq.codegen.example.JPrefixGeneratorStrategy"
 				}
-
 			}
 		}
 	}
