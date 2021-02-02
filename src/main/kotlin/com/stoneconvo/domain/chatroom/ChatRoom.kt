@@ -65,10 +65,9 @@ class ChatRoom(
             )
         }
 
-        members.replaceAll { m ->
-            if
-            (m.userAccountId.equals(memberWithNewName.userAccountId)) memberWithNewName
-            else m
+        members.replaceAll {
+            if (it.userAccountId.equals(memberWithNewName.userAccountId)) memberWithNewName
+            else it
         }
     }
 

@@ -1,6 +1,7 @@
 package com.stoneconvo.applicationService.chatRoom
 
 import com.stoneconvo.applicationService.chatRoom.command.AddMemberCommand
+import com.stoneconvo.applicationService.chatRoom.command.ChangeMemberNameCommand
 import com.stoneconvo.applicationService.chatRoom.command.ChangeNameCommand
 import com.stoneconvo.applicationService.chatRoom.command.CreateCommand
 import com.stoneconvo.domain.chatroom.ChatRoom
@@ -51,6 +52,23 @@ class ChatRoomApplicationService(
             RoomMember(
                 name = addMemberCommand.name,
                 userAccountId = addMemberCommand.userAccountId
+            )
+        )
+
+        chatRoomRepository.save(foundChatRoom)
+    }
+
+    fun changeMemberName(changeMemberNameCommand: ChangeMemberNameCommand) {
+        val foundChatRoom = chatRoomRepository.findByRoomId(changeMemberNameCommand.chatRoomId)
+            ?: throw ChatRoomNotFoundException(
+                chatRoomId = changeMemberNameCommand.chatRoomId,
+                message = "Chat Room Not Found"
+            )
+
+        foundChatRoom.changeMemberName(
+            RoomMember(
+                name = changeMemberNameCommand.newName,
+                userAccountId = changeMemberNameCommand.userAccountId
             )
         )
 
