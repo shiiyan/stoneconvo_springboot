@@ -4,18 +4,15 @@ import com.stoneconvo.applicationService.chatRoom.command.AddMemberCommand
 import com.stoneconvo.applicationService.chatRoom.command.ChangeNameCommand
 import com.stoneconvo.applicationService.chatRoom.command.CreateCommand
 import com.stoneconvo.domain.chatroom.ChatRoom
-import com.stoneconvo.domain.chatroom.ChatRoomId
+import com.stoneconvo.domain.chatroom.roomMember.RoomMember
 import com.stoneconvo.exceptions.AdministratorNotFoundException
 import com.stoneconvo.exceptions.ChatRoomNotFoundException
-import com.stoneconvo.exceptions.RoomMemberNotFoundException
 import com.stoneconvo.repository.administrator.AdministratorRepository
 import com.stoneconvo.repository.chatRoom.ChatRoomRepository
-import com.stoneconvo.repository.roomMember.RoomMemberRepository
 
 class ChatRoomApplicationService(
     private val administratorRepository: AdministratorRepository,
     private val chatRoomRepository: ChatRoomRepository,
-    private val roomMemberRepository: RoomMemberRepository,
 ) {
     fun create(createCommand: CreateCommand) {
         val administrator = administratorRepository.findByUserId(createCommand.currentUserId)
@@ -23,12 +20,9 @@ class ChatRoomApplicationService(
                 userId = createCommand.currentUserId,
                 message = "Administrator Not Found"
             )
-        val newChatRoom = ChatRoom(
-            id = ChatRoomId.create(),
+        val newChatRoom = ChatRoom.create(
             name = createCommand.name,
-            owner = administrator,
-            members = mutableListOf(),
-            messages = mutableListOf()
+            owner = administrator
         )
 
         chatRoomRepository.save(newChatRoom)
@@ -52,13 +46,13 @@ class ChatRoomApplicationService(
                 chatRoomId = addMemberCommand.chatRoomId,
                 message = "Chat Room Not Found"
             )
-        val foundRoomMember = roomMemberRepository.findByRoomMemberId(addMemberCommand.newMemberId)
-            ?: throw RoomMemberNotFoundException(
-                roomMemberId = addMemberCommand.newMemberId,
-                message = "Room Member Not Found"
-            )
 
-        foundChatRoom.addMember(foundRoomMember)
+        foundChatRoom.addMember(
+            RoomMember(
+                name = addMemberCommand.name,
+                userAccountId = addMemberCommand.userAccountId
+            )
+        )
 
         chatRoomRepository.save(foundChatRoom)
     }

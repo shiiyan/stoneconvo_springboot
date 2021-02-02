@@ -1,4 +1,4 @@
-package com.stoneconvo.domain.roomMember
+package com.stoneconvo.domain.chatroom.roomMember
 
 data class RoomMemberName(private val value: String) {
     companion object {
