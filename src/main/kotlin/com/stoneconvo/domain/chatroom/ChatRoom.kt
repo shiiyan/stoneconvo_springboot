@@ -1,10 +1,11 @@
 package com.stoneconvo.domain.chatroom
 
 import com.stoneconvo.domain.administrator.Administrator
+import com.stoneconvo.domain.chatroom.roomMember.RoomMember
 import com.stoneconvo.domain.message.MessageId
-import com.stoneconvo.domain.roomMember.RoomMember
 import com.stoneconvo.exceptions.ChatRoomMemberExistException
 import com.stoneconvo.exceptions.ChatRoomMemberFullException
+import com.stoneconvo.exceptions.ChatRoomMemberNotExistException
 
 class ChatRoom(
     val id: ChatRoomId,
@@ -13,6 +14,19 @@ class ChatRoom(
     val members: MutableList<RoomMember>,
     val messages: MutableList<MessageId>
 ) {
+    companion object {
+        fun create(
+            name: ChatRoomName,
+            owner: Administrator
+        ) = ChatRoom(
+            id = ChatRoomId.create(),
+            name = name,
+            owner = owner,
+            members = mutableListOf(),
+            messages = mutableListOf()
+        )
+    }
+
     fun changeName(newName: ChatRoomName) {
         name = newName
     }
@@ -25,7 +39,7 @@ class ChatRoom(
         if (isMemberExist(newMember)) {
             throw ChatRoomMemberExistException(
                 chatRoomId = id,
-                roomMemberId = newMember.id
+                userAccountId = newMember.userAccountId
             )
         }
 
@@ -33,7 +47,29 @@ class ChatRoom(
     }
 
     fun removeMember(memberToRemove: RoomMember) {
+        if (!isMemberExist(memberToRemove)) {
+            throw ChatRoomMemberNotExistException(
+                chatRoomId = id,
+                userAccountId = memberToRemove.userAccountId
+            )
+        }
+
         members.remove(memberToRemove)
+    }
+
+    fun changeMemberName(memberWithNewName: RoomMember) {
+        if (!isMemberExist(memberWithNewName)) {
+            throw ChatRoomMemberNotExistException(
+                chatRoomId = id,
+                userAccountId = memberWithNewName.userAccountId
+            )
+        }
+
+        members.replaceAll { m ->
+            if
+            (m.userAccountId.equals(memberWithNewName.userAccountId)) memberWithNewName
+            else m
+        }
     }
 
     fun sendMessage(newMessageId: MessageId) {
