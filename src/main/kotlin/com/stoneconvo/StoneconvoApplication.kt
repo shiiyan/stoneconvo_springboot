@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class StoneconvoApplication
 
 fun main(args: Array<String>) {
-	runApplication<StoneconvoApplication>(*args)
+    runApplication<StoneconvoApplication>(*args)
 }

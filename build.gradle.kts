@@ -4,6 +4,7 @@ plugins {
 	id("org.springframework.boot") version "2.4.1"
 	id("io.spring.dependency-management") version "1.0.10.RELEASE"
 	id("org.jmailen.kotlinter") version "3.3.0"
+	id("nu.studer.jooq") version "5.2"
 	kotlin("jvm") version "1.4.21"
 	kotlin("plugin.spring") version "1.4.21"
 }
@@ -21,8 +22,59 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("mysql:mysql-connector-java")
+	jooqGenerator("mysql:mysql-connector-java")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+jooq {
+	version.set("3.14.1")
+	edition.set(nu.studer.gradle.jooq.JooqEdition.OSS)
+
+	configurations {
+		create("main") {
+			generateSchemaSourceOnCompilation.set(true)
+
+			jooqConfiguration.apply {
+				logging = org.jooq.meta.jaxb.Logging.DEBUG
+				jdbc.apply {
+					driver = "com.mysql.cj.jdbc.Driver"
+					url = "jdbc:mysql://localhost:3306/stoneconvo_dev"
+					user = "root"
+					password = "root"
+				}
+				generator.apply {
+					name = "org.jooq.codegen.DefaultGenerator"
+					database.apply {
+						name = "org.jooq.meta.mysql.MySQLDatabase"
+						includes = ".*"
+						excludes = ""
+						inputSchema = "stoneconvo_dev"
+					}
+					generate.apply {
+						isJavaTimeTypes = true
+						isRecords = true
+						isDaos = true
+					}
+					target.apply {
+						packageName = "com.stoneconvo.codegen"
+						isClean = true
+					}
+					strategy.name = "org.jooq.codegen.example.JPrefixGeneratorStrategy"
+				}
+			}
+		}
+	}
+}
+
+buildscript {
+	// Enforcing the jOOQ configuration XML schema version
+	configurations["classpath"].resolutionStrategy.eachDependency {
+		if (requested.group == "org.jooq") {
+			useVersion("3.12.4")
+		}
+	}
 }
 
 tasks.withType<KotlinCompile> {
