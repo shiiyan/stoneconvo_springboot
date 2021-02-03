@@ -10,9 +10,14 @@ import com.stoneconvo.exceptions.AdministratorNotFoundException
 import com.stoneconvo.exceptions.ChatRoomNotFoundException
 import com.stoneconvo.repository.administrator.AdministratorRepository
 import com.stoneconvo.repository.chatRoom.ChatRoomRepository
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
+@Service
 class ChatRoomApplicationService(
+    @Autowired
     private val administratorRepository: AdministratorRepository,
+    @Autowired
     private val chatRoomRepository: ChatRoomRepository,
 ) {
     fun create(createCommand: CreateCommand) {

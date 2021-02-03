@@ -2,7 +2,7 @@ package com.stoneconvo.domain.chatroom
 
 import com.stoneconvo.domain.administrator.Administrator
 import com.stoneconvo.domain.chatroom.roomMember.RoomMember
-import com.stoneconvo.domain.message.MessageId
+import com.stoneconvo.domain.userAccount.UserAccountId
 import com.stoneconvo.exceptions.ChatRoomMemberExistException
 import com.stoneconvo.exceptions.ChatRoomMemberFullException
 import com.stoneconvo.exceptions.ChatRoomMemberNotExistException
@@ -12,7 +12,6 @@ class ChatRoom(
     var name: ChatRoomName,
     val owner: Administrator,
     val members: MutableList<RoomMember>,
-    val messages: MutableList<MessageId>
 ) {
     companion object {
         fun create(
@@ -23,7 +22,6 @@ class ChatRoom(
             name = name,
             owner = owner,
             members = mutableListOf(),
-            messages = mutableListOf()
         )
     }
 
@@ -31,12 +29,15 @@ class ChatRoom(
         name = newName
     }
 
+    fun isMemberExist(userAccountId: UserAccountId): Boolean = members
+        .map { it.userAccountId }.contains(userAccountId)
+
     fun addMember(newMember: RoomMember) {
         if (isMemberFull()) {
             throw ChatRoomMemberFullException(id)
         }
 
-        if (isMemberExist(newMember)) {
+        if (isMemberExist(newMember.userAccountId)) {
             throw ChatRoomMemberExistException(
                 chatRoomId = id,
                 userAccountId = newMember.userAccountId
@@ -47,7 +48,7 @@ class ChatRoom(
     }
 
     fun removeMember(memberToRemove: RoomMember) {
-        if (!isMemberExist(memberToRemove)) {
+        if (!isMemberExist(memberToRemove.userAccountId)) {
             throw ChatRoomMemberNotExistException(
                 chatRoomId = id,
                 userAccountId = memberToRemove.userAccountId
@@ -58,7 +59,7 @@ class ChatRoom(
     }
 
     fun changeMemberName(memberWithNewName: RoomMember) {
-        if (!isMemberExist(memberWithNewName)) {
+        if (!isMemberExist(memberWithNewName.userAccountId)) {
             throw ChatRoomMemberNotExistException(
                 chatRoomId = id,
                 userAccountId = memberWithNewName.userAccountId
@@ -71,15 +72,5 @@ class ChatRoom(
         }
     }
 
-    fun sendMessage(newMessageId: MessageId) {
-        messages.add(newMessageId)
-    }
-
-    fun deleteMessage(messageIdToDelete: MessageId) {
-        messages.remove(messageIdToDelete)
-    }
-
     private fun isMemberFull(): Boolean = members.size > 30
-
-    private fun isMemberExist(member: RoomMember): Boolean = members.contains(member)
 }
