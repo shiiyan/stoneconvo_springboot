@@ -19,8 +19,7 @@ class MessageApplicationService(
     fun send(sendMessageCommand: SendMessageCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(sendMessageCommand.roomId)
             ?: throw ChatRoomNotFoundException(
-                chatRoomId = sendMessageCommand.roomId,
-                message = "Chat Room Not Found"
+                chatRoomId = sendMessageCommand.roomId
             )
 
         if (!foundChatRoom.isMemberExist(sendMessageCommand.senderId)) {

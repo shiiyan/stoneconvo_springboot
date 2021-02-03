@@ -23,9 +23,9 @@ class ChatRoomApplicationService(
     fun create(createCommand: CreateCommand) {
         val administrator = administratorRepository.findByUserId(createCommand.currentUserId)
             ?: throw AdministratorNotFoundException(
-                userId = createCommand.currentUserId,
-                message = "Administrator Not Found"
+                userId = createCommand.currentUserId
             )
+
         val newChatRoom = ChatRoom.create(
             name = createCommand.name,
             owner = administrator
@@ -37,8 +37,7 @@ class ChatRoomApplicationService(
     fun changeName(changeNameCommand: ChangeNameCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(changeNameCommand.chatRoomId)
             ?: throw ChatRoomNotFoundException(
-                chatRoomId = changeNameCommand.chatRoomId,
-                message = "Chat Room Not Found"
+                chatRoomId = changeNameCommand.chatRoomId
             )
 
         foundChatRoom.changeName(changeNameCommand.newName)
@@ -49,8 +48,7 @@ class ChatRoomApplicationService(
     fun addMember(addMemberCommand: AddMemberCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(addMemberCommand.chatRoomId)
             ?: throw ChatRoomNotFoundException(
-                chatRoomId = addMemberCommand.chatRoomId,
-                message = "Chat Room Not Found"
+                chatRoomId = addMemberCommand.chatRoomId
             )
 
         foundChatRoom.addMember(
@@ -66,8 +64,7 @@ class ChatRoomApplicationService(
     fun changeMemberName(changeMemberNameCommand: ChangeMemberNameCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(changeMemberNameCommand.chatRoomId)
             ?: throw ChatRoomNotFoundException(
-                chatRoomId = changeMemberNameCommand.chatRoomId,
-                message = "Chat Room Not Found"
+                chatRoomId = changeMemberNameCommand.chatRoomId
             )
 
         foundChatRoom.changeMemberName(
