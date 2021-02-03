@@ -1,6 +1,7 @@
 package com.stoneconvo.applicationService.chatRoom
 
 import com.stoneconvo.applicationService.chatRoom.command.AddMemberCommand
+import com.stoneconvo.applicationService.chatRoom.command.ChangeMemberNameCommand
 import com.stoneconvo.applicationService.chatRoom.command.ChangeNameCommand
 import com.stoneconvo.applicationService.chatRoom.command.CreateCommand
 import com.stoneconvo.domain.chatroom.ChatRoom
@@ -9,17 +10,24 @@ import com.stoneconvo.exceptions.AdministratorNotFoundException
 import com.stoneconvo.exceptions.ChatRoomNotFoundException
 import com.stoneconvo.repository.administrator.AdministratorRepository
 import com.stoneconvo.repository.chatRoom.ChatRoomRepository
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
+@Component
 class ChatRoomApplicationService(
+    @Autowired
     private val administratorRepository: AdministratorRepository,
+    @Autowired
     private val chatRoomRepository: ChatRoomRepository,
 ) {
+    @Transactional
     fun create(createCommand: CreateCommand) {
         val administrator = administratorRepository.findByUserId(createCommand.currentUserId)
             ?: throw AdministratorNotFoundException(
-                userId = createCommand.currentUserId,
-                message = "Administrator Not Found"
+                userId = createCommand.currentUserId
             )
+
         val newChatRoom = ChatRoom.create(
             name = createCommand.name,
             owner = administrator
@@ -28,11 +36,11 @@ class ChatRoomApplicationService(
         chatRoomRepository.save(newChatRoom)
     }
 
+    @Transactional
     fun changeName(changeNameCommand: ChangeNameCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(changeNameCommand.chatRoomId)
             ?: throw ChatRoomNotFoundException(
-                chatRoomId = changeNameCommand.chatRoomId,
-                message = "Chat Room Not Found"
+                chatRoomId = changeNameCommand.chatRoomId
             )
 
         foundChatRoom.changeName(changeNameCommand.newName)
@@ -40,17 +48,34 @@ class ChatRoomApplicationService(
         chatRoomRepository.save(foundChatRoom)
     }
 
+    @Transactional
     fun addMember(addMemberCommand: AddMemberCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(addMemberCommand.chatRoomId)
             ?: throw ChatRoomNotFoundException(
-                chatRoomId = addMemberCommand.chatRoomId,
-                message = "Chat Room Not Found"
+                chatRoomId = addMemberCommand.chatRoomId
             )
 
         foundChatRoom.addMember(
             RoomMember(
                 name = addMemberCommand.name,
                 userAccountId = addMemberCommand.userAccountId
+            )
+        )
+
+        chatRoomRepository.save(foundChatRoom)
+    }
+
+    @Transactional
+    fun changeMemberName(changeMemberNameCommand: ChangeMemberNameCommand) {
+        val foundChatRoom = chatRoomRepository.findByRoomId(changeMemberNameCommand.chatRoomId)
+            ?: throw ChatRoomNotFoundException(
+                chatRoomId = changeMemberNameCommand.chatRoomId
+            )
+
+        foundChatRoom.changeMemberName(
+            RoomMember(
+                name = changeMemberNameCommand.newName,
+                userAccountId = changeMemberNameCommand.userAccountId
             )
         )
 
