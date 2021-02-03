@@ -11,15 +11,17 @@ import com.stoneconvo.exceptions.ChatRoomNotFoundException
 import com.stoneconvo.repository.administrator.AdministratorRepository
 import com.stoneconvo.repository.chatRoom.ChatRoomRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
-@Service
+@Component
 class ChatRoomApplicationService(
     @Autowired
     private val administratorRepository: AdministratorRepository,
     @Autowired
     private val chatRoomRepository: ChatRoomRepository,
 ) {
+    @Transactional
     fun create(createCommand: CreateCommand) {
         val administrator = administratorRepository.findByUserId(createCommand.currentUserId)
             ?: throw AdministratorNotFoundException(
@@ -34,6 +36,7 @@ class ChatRoomApplicationService(
         chatRoomRepository.save(newChatRoom)
     }
 
+    @Transactional
     fun changeName(changeNameCommand: ChangeNameCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(changeNameCommand.chatRoomId)
             ?: throw ChatRoomNotFoundException(
@@ -45,6 +48,7 @@ class ChatRoomApplicationService(
         chatRoomRepository.save(foundChatRoom)
     }
 
+    @Transactional
     fun addMember(addMemberCommand: AddMemberCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(addMemberCommand.chatRoomId)
             ?: throw ChatRoomNotFoundException(
@@ -61,6 +65,7 @@ class ChatRoomApplicationService(
         chatRoomRepository.save(foundChatRoom)
     }
 
+    @Transactional
     fun changeMemberName(changeMemberNameCommand: ChangeMemberNameCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(changeMemberNameCommand.chatRoomId)
             ?: throw ChatRoomNotFoundException(

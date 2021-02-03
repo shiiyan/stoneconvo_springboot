@@ -7,15 +7,17 @@ import com.stoneconvo.exceptions.ChatRoomNotFoundException
 import com.stoneconvo.repository.chatRoom.ChatRoomRepository
 import com.stoneconvo.repository.message.MessageRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
-@Service
+@Component
 class MessageApplicationService(
     @Autowired
     private val chatRoomRepository: ChatRoomRepository,
     @Autowired
     private val messageRepository: MessageRepository
 ) {
+    @Transactional
     fun send(sendMessageCommand: SendMessageCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(sendMessageCommand.roomId)
             ?: throw ChatRoomNotFoundException(
