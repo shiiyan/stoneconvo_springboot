@@ -1,3 +1,11 @@
+DROP TABLE messages;
+DROP TABLE room_members;
+DROP TABLE chat_rooms;
+DROP TABLE user_accounts;
+DROP TABLE administrators;
+
+
+
 CREATE TABLE administrators (
     user_account_id VARCHAR(255) NOT NULL,
     created_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -26,13 +34,12 @@ CREATE TABLE chat_rooms (
 );
 
 CREATE TABLE room_members (
-    room_member_id   VARCHAR(255) NOT NULL,
     user_account_id  VARCHAR(255) NOT NULL,
     member_name      VARCHAR(255) NOT NULL,
     room_id          VARCHAR(255) NOT NULL,
     created_at       TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at       TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (room_member_id),
+    PRIMARY KEY (user_account_id, room_id),
     FOREIGN KEY (user_account_id) REFERENCES user_accounts(user_account_id),
     FOREIGN KEY (room_id)         REFERENCES chat_rooms(room_id)
 );

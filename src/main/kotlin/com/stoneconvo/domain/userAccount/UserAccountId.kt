@@ -1,6 +1,6 @@
 package com.stoneconvo.domain.userAccount
 
-data class UserAccountId(val id: String) {
+data class UserAccountId(val value: String) {
     companion object {
         private const val PATTERN = "^[A-Za-z0-9]{20}$"
     }
@@ -10,6 +10,6 @@ data class UserAccountId(val id: String) {
     }
 
     private fun validate() {
-        require((PATTERN.toRegex().matches(id))) { "UserAccountId's pattern is invalid." }
+        require((PATTERN.toRegex().matches(value))) { "UserAccountId's pattern is invalid." }
     }
 }
