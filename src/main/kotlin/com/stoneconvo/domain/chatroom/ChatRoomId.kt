@@ -2,9 +2,9 @@ package com.stoneconvo.domain.chatroom
 
 import com.stoneconvo.helpers.Helper
 
-data class ChatRoomId(val id: String) {
+data class ChatRoomId(val value: String) {
     companion object {
-        fun create() = ChatRoomId(id = Helper.generateRandomId())
+        fun create() = ChatRoomId(value = Helper.generateRandomId())
         private const val PATTERN = "^[A-Za-z0-9]{20}$"
     }
 
@@ -13,6 +13,6 @@ data class ChatRoomId(val id: String) {
     }
 
     private fun validate() {
-        require((PATTERN.toRegex().matches(id))) { "MessageId's pattern is invalid." }
+        require((PATTERN.toRegex().matches(value))) { "MessageId's pattern is invalid." }
     }
 }

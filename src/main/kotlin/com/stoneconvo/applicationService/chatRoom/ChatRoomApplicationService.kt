@@ -8,18 +8,22 @@ import com.stoneconvo.domain.chatroom.ChatRoom
 import com.stoneconvo.domain.chatroom.roomMember.RoomMember
 import com.stoneconvo.exceptions.AdministratorNotFoundException
 import com.stoneconvo.exceptions.ChatRoomNotFoundException
+import com.stoneconvo.exceptions.UserAccountNotFoundException
 import com.stoneconvo.repository.administrator.AdministratorRepository
 import com.stoneconvo.repository.chatRoom.ChatRoomRepository
+import com.stoneconvo.repository.userAccount.UserAccountRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-@Component
+@Service
 class ChatRoomApplicationService(
     @Autowired
     private val administratorRepository: AdministratorRepository,
     @Autowired
     private val chatRoomRepository: ChatRoomRepository,
+    @Autowired
+    private val userAccountRepository: UserAccountRepository,
 ) {
     @Transactional
     fun create(createCommand: CreateCommand) {
@@ -54,6 +58,12 @@ class ChatRoomApplicationService(
             ?: throw ChatRoomNotFoundException(
                 chatRoomId = addMemberCommand.chatRoomId
             )
+
+        if (userAccountRepository.findByUserId(addMemberCommand.userAccountId) == null) {
+            throw UserAccountNotFoundException(
+                userAccountId = addMemberCommand.userAccountId
+            )
+        }
 
         foundChatRoom.addMember(
             RoomMember(
