@@ -7,10 +7,10 @@ import com.stoneconvo.exceptions.ChatRoomNotFoundException
 import com.stoneconvo.repository.chatRoom.ChatRoomRepository
 import com.stoneconvo.repository.message.MessageRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-@Component
+@Service
 class MessageApplicationService(
     @Autowired
     private val chatRoomRepository: ChatRoomRepository,

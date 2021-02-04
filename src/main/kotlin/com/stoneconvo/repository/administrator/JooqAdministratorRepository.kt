@@ -10,7 +10,7 @@ class JooqAdministratorRepository : AdministratorRepository {
     private val dao = JAdministratorsDao()
 
     override fun findByUserId(userId: UserAccountId): Administrator? =
-        dao.fetchOneByJUserAccountId(userId.id)?.let {
+        dao.fetchOneByJUserAccountId(userId.value)?.let {
             Administrator(
                 UserAccountId(it.userAccountId)
             )

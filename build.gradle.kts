@@ -35,7 +35,7 @@ jooq {
 
 	configurations {
 		create("main") {
-			generateSchemaSourceOnCompilation.set(true)
+			generateSchemaSourceOnCompilation.set(false)
 
 			jooqConfiguration.apply {
 				logging = org.jooq.meta.jaxb.Logging.DEBUG
