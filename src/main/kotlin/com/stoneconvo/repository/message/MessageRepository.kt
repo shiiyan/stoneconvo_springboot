@@ -5,5 +5,6 @@ import com.stoneconvo.domain.message.MessageId
 
 interface MessageRepository {
     fun findByMessageId(messageId: MessageId): Message?
-    fun save(message: Message)
+    fun insert(message: Message)
+    fun update(message: Message)
 }

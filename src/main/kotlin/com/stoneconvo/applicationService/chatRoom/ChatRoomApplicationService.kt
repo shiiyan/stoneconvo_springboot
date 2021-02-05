@@ -76,6 +76,11 @@ class ChatRoomApplicationService(
     }
 
     @Transactional
+    fun removeMember() {
+        TODO()
+    }
+
+    @Transactional
     fun changeMemberName(changeMemberNameCommand: ChangeMemberNameCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(changeMemberNameCommand.chatRoomId)
             ?: throw ChatRoomNotFoundException(
