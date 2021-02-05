@@ -24,7 +24,7 @@ class JooqMessageRepository : MessageRepository {
             )
         }
 
-    override fun save(message: Message) {
+    override fun insert(message: Message) {
         val messagePojo = JMessages()
         messagePojo.messageId = message.id.value
         messagePojo.content = message.content.value
@@ -33,5 +33,16 @@ class JooqMessageRepository : MessageRepository {
         messagePojo.sentDateTime = message.sentDateTime
 
         messageDao.insert(messagePojo)
+    }
+
+    override fun update(message: Message) {
+        val messagePojo = JMessages()
+        messagePojo.messageId = message.id.value
+        messagePojo.content = message.content.value
+        messagePojo.roomId = message.roomId.value
+        messagePojo.senderId = message.senderId.value
+        messagePojo.sentDateTime = message.sentDateTime
+
+        messageDao.update(messagePojo)
     }
 }
