@@ -1,9 +1,11 @@
 package com.stoneconvo.applicationService.message
 
+import com.stoneconvo.applicationService.message.command.EditMessageCommand
 import com.stoneconvo.applicationService.message.command.SendMessageCommand
 import com.stoneconvo.domain.message.Message
 import com.stoneconvo.exceptions.ChatRoomMemberNotExistException
 import com.stoneconvo.exceptions.ChatRoomNotFoundException
+import com.stoneconvo.exceptions.MessageNotFoundException
 import com.stoneconvo.repository.chatRoom.ChatRoomRepository
 import com.stoneconvo.repository.message.MessageRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -37,6 +39,18 @@ class MessageApplicationService(
             senderId = sendMessageCommand.senderId
         )
 
-        messageRepository.save(newMessage)
+        messageRepository.insert(newMessage)
+    }
+
+    @Transactional
+    fun edit(editMessageCommand: EditMessageCommand) {
+        val foundMessage = messageRepository.findByMessageId(editMessageCommand.messageId)
+            ?: throw MessageNotFoundException(
+                messageId = editMessageCommand.messageId
+            )
+
+        foundMessage.updateContent(editMessageCommand.newContent)
+
+        messageRepository.update(foundMessage)
     }
 }
