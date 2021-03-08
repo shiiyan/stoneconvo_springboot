@@ -1,7 +1,10 @@
 package com.stoneconvo.domain.userAccount
 
+import com.stoneconvo.helpers.Helper
+
 data class UserAccountId(val value: String) {
     companion object {
+        fun create() = UserAccountId(value = Helper.generateRandomId())
         private const val PATTERN = "^[A-Za-z0-9]{20}$"
     }
 

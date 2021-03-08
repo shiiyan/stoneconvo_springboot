@@ -21,4 +21,11 @@ class JooqUserAccountRepository : UserAccountRepository {
                 creator = Administrator(UserAccountId(it.creatorId))
             )
         }
+
+    override fun insert(userAccount: UserAccount) {
+    }
+
+    override fun update(userAccount: UserAccount) {
+        TODO("Not yet implemented")
+    }
 }

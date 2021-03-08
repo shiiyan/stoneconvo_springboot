@@ -29,6 +29,7 @@ class JooqChatRoomRepository : ChatRoomRepository {
         }
 
     override fun save(chatRoom: ChatRoom) {
+        deleteChatRoomByRoomId(chatRoom.id)
         val chatRoomPojo = JChatRooms()
         chatRoomPojo.roomId = chatRoom.id.value
         chatRoomPojo.roomName = chatRoom.name.value
@@ -54,6 +55,11 @@ class JooqChatRoomRepository : ChatRoomRepository {
                 userAccountId = UserAccountId(it.userAccountId)
             )
         }.toMutableList()
+
+    private fun deleteChatRoomByRoomId(roomId: ChatRoomId) {
+        val roomPojos = chatRoomDao.fetchByJRoomId(roomId.value)
+        chatRoomDao.delete(roomPojos)
+    }
 
     private fun deleteAllRoomMembersByRoomId(roomId: ChatRoomId) {
         val roomMemberPojos = roomMembersDao.fetchByJRoomId(roomId.value)
