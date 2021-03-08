@@ -1,6 +1,7 @@
 package com.stoneconvo.repository.userAccount
 
 import com.stoneconvo.codegen.tables.daos.JUserAccountsDao
+import com.stoneconvo.codegen.tables.pojos.JUserAccounts
 import com.stoneconvo.domain.administrator.Administrator
 import com.stoneconvo.domain.userAccount.PasswordHash
 import com.stoneconvo.domain.userAccount.UserAccount
@@ -23,9 +24,22 @@ class JooqUserAccountRepository : UserAccountRepository {
         }
 
     override fun insert(userAccount: UserAccount) {
+        val userAccountPojo = JUserAccounts()
+        userAccountPojo.userAccountId = userAccount.id.value
+        userAccountPojo.accountName = userAccount.name.value
+        userAccountPojo.passwordHash = userAccount.passwordHash.value
+        userAccountPojo.creatorId = userAccount.creator.id.value
+
+        dao.insert(userAccountPojo)
     }
 
     override fun update(userAccount: UserAccount) {
-        TODO("Not yet implemented")
+        val userAccountPojo = JUserAccounts()
+        userAccountPojo.userAccountId = userAccount.id.value
+        userAccountPojo.accountName = userAccount.name.value
+        userAccountPojo.passwordHash = userAccount.passwordHash.value
+        userAccountPojo.creatorId = userAccount.creator.id.value
+
+        dao.update(userAccountPojo)
     }
 }

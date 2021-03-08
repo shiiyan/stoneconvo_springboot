@@ -5,7 +5,7 @@ import com.stoneconvo.domain.administrator.Administrator
 class UserAccount(
     val id: UserAccountId,
     var name: UserAccountName,
-    private val passwordHash: PasswordHash,
+    val passwordHash: PasswordHash,
     val creator: Administrator
 ) {
     companion object {
