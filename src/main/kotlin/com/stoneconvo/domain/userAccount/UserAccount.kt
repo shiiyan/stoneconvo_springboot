@@ -8,6 +8,19 @@ class UserAccount(
     private val passwordHash: PasswordHash,
     val creator: Administrator
 ) {
+    companion object {
+        fun create(
+            name: UserAccountName,
+            passwordHash: PasswordHash,
+            creator: Administrator,
+        ) = UserAccount(
+            id = UserAccountId.create(),
+            name = name,
+            passwordHash = passwordHash,
+            creator = creator
+        )
+    }
+
     fun changeName(newName: UserAccountName) {
         name = newName
     }

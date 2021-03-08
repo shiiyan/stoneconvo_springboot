@@ -7,5 +7,5 @@ import com.stoneconvo.domain.userAccount.UserAccountId
 data class SendMessageCommand(
     val messageContent: MessageContent,
     val roomId: ChatRoomId,
-    val senderId: UserAccountId
+    val currentUserId: UserAccountId
 )

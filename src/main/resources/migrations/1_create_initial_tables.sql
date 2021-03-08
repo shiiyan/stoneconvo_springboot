@@ -1,9 +1,8 @@
-DROP TABLE messages;
-DROP TABLE room_members;
-DROP TABLE chat_rooms;
-DROP TABLE user_accounts;
-DROP TABLE administrators;
-
+--DROP TABLE messages;
+--DROP TABLE room_members;
+--DROP TABLE chat_rooms;
+--DROP TABLE user_accounts;
+--DROP TABLE administrators;
 
 
 CREATE TABLE administrators (

@@ -26,17 +26,15 @@ class MessageApplicationService(
                 chatRoomId = sendMessageCommand.roomId
             )
 
-        if (!foundChatRoom.isMemberExist(sendMessageCommand.senderId)) {
+        if (!foundChatRoom.isMemberExist(sendMessageCommand.currentUserId)) {
             throw ChatRoomMemberNotExistException(
                 chatRoomId = sendMessageCommand.roomId,
-                userAccountId = sendMessageCommand.senderId
+                userAccountId = sendMessageCommand.currentUserId
             )
         }
 
         val newMessage = Message.create(
             content = sendMessageCommand.messageContent,
-            roomId = sendMessageCommand.roomId,
-            senderId = sendMessageCommand.senderId
         )
 
         messageRepository.insert(newMessage)
