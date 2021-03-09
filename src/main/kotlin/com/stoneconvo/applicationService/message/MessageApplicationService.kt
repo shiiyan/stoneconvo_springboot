@@ -35,6 +35,8 @@ class MessageApplicationService(
 
         val newMessage = Message.create(
             content = sendMessageCommand.messageContent,
+            roomId = sendMessageCommand.roomId,
+            senderId = sendMessageCommand.currentUserId
         )
 
         messageRepository.insert(newMessage)
