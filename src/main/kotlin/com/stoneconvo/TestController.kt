@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse
 @RestController
 @RequestMapping("/test")
 class TestController {
-    @GetMapping("/")
+    @GetMapping("/show_cookie")
     fun test(@CookieValue("test-cookie") testCookie: String) =
         "Hello from SpringBoot with testCookie $testCookie"
 
