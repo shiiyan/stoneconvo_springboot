@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest
 @Order(1)
 class RequestLoggingFilter : AbstractRequestLoggingFilter() {
     init {
-        this.setIncludeClientInfo(true)
-        this.setIncludeHeaders(true)
-        this.setIncludePayload(true)
-        this.setIncludeQueryString(true)
+        super.setIncludeClientInfo(true)
+        super.setIncludeHeaders(true)
+        super.setIncludePayload(true)
+        super.setIncludeQueryString(true)
     }
 
     override fun beforeRequest(request: HttpServletRequest, message: String) {
