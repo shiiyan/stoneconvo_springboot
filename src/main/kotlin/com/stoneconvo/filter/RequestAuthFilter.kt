@@ -25,7 +25,8 @@ class RequestAuthFilter : OncePerRequestFilter() {
         filterChain.doFilter(request, response)
     }
 
-    override fun shouldNotFilter(request: HttpServletRequest): Boolean = "/login" == (request.requestURI)
+    override fun shouldNotFilter(request: HttpServletRequest): Boolean =
+        "^(/login)$".toRegex().matches(request.requestURI)
 
     private fun hasUserIdInCookies(request: HttpServletRequest) =
         request.cookies
