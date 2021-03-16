@@ -2,7 +2,9 @@ package com.stoneconvo.applicationService.userAccount
 
 import com.stoneconvo.applicationService.userAccount.command.ChangeNameCommand
 import com.stoneconvo.applicationService.userAccount.command.CreateCommand
+import com.stoneconvo.applicationService.userAccount.command.LoginCommand
 import com.stoneconvo.domain.userAccount.UserAccount
+import com.stoneconvo.domain.userAccount.UserAccountService
 import com.stoneconvo.exceptions.AdministratorNotFoundException
 import com.stoneconvo.exceptions.UserAccountNotFoundException
 import com.stoneconvo.repository.administrator.AdministratorRepository
@@ -17,6 +19,8 @@ class UserAccountApplicationService(
     private val administratorRepository: AdministratorRepository,
     @Autowired
     private val userAccountRepository: UserAccountRepository,
+    @Autowired
+    private val userAccountService: UserAccountService,
 ) {
     @Transactional
     fun create(createCommand: CreateCommand) {
@@ -33,6 +37,12 @@ class UserAccountApplicationService(
 
         userAccountRepository.insert(newUserAccount)
     }
+
+    @Transactional
+    fun login(loginCommand: LoginCommand) = userAccountService.login(
+        name = loginCommand.name,
+        password = loginCommand.password
+    )
 
     @Transactional
     fun changeName(changeNameCommand: ChangeNameCommand) {
