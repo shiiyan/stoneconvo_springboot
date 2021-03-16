@@ -1,19 +1,36 @@
 package com.stoneconvo.controller.userAccount
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import com.stoneconvo.applicationService.userAccount.UserAccountApplicationService
+import com.stoneconvo.applicationService.userAccount.command.LoginCommand
+import com.stoneconvo.controller.userAccount.RequestBody.LoginRequestBody
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.*
+import javax.servlet.http.Cookie
+import javax.servlet.http.HttpServletResponse
 
 @RestController
 @RequestMapping("/user_account")
-class UserAccountController {
-    @PostMapping("/create")
-    fun create() {}
-
+class UserAccountController(
+    @Autowired
+    private val userAccountApplicationService: UserAccountApplicationService,
+) {
     @PostMapping("/login")
-    fun login() {}
+    fun login(@RequestBody request: LoginRequestBody, response: HttpServletResponse): String {
+        val currentUserId = userAccountApplicationService.login(
+            LoginCommand(
+                name = request.name,
+                password = request.password
+            )
+        ).id.value
+
+        response.addCookie(
+            Cookie("user-id", currentUserId)
+        )
+
+        return currentUserId
+    }
 
     @GetMapping("/logout")
-    fun logout() {}
+    fun logout() {
+    }
 }
