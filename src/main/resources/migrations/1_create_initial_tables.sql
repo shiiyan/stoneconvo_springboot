@@ -19,6 +19,7 @@ CREATE TABLE user_accounts (
     created_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (user_account_id),
+    UNIQUE (account_name),
     FOREIGN KEY (creator_id) REFERENCES administrators(user_account_id)
 );
 
