@@ -7,11 +7,16 @@ import com.stoneconvo.domain.message.Message
 import com.stoneconvo.domain.message.MessageContent
 import com.stoneconvo.domain.message.MessageId
 import com.stoneconvo.domain.userAccount.UserAccountId
+import org.jooq.DSLContext
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 
 @Repository
-class JooqMessageRepository : MessageRepository {
-    private val messageDao = JMessagesDao()
+class JooqMessageRepository(
+    @Autowired
+    private val dslContext: DSLContext
+) : MessageRepository {
+    private val messageDao = JMessagesDao(dslContext.configuration())
 
     override fun findByMessageId(messageId: MessageId): Message? =
         messageDao.fetchOneByJMessageId(messageId.value)?.let {

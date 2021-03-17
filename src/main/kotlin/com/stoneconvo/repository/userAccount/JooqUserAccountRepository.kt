@@ -7,14 +7,29 @@ import com.stoneconvo.domain.userAccount.PasswordHash
 import com.stoneconvo.domain.userAccount.UserAccount
 import com.stoneconvo.domain.userAccount.UserAccountId
 import com.stoneconvo.domain.userAccount.UserAccountName
+import org.jooq.DSLContext
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 
 @Repository
-class JooqUserAccountRepository : UserAccountRepository {
-    private val dao = JUserAccountsDao()
+class JooqUserAccountRepository(
+    @Autowired
+    private val dslContext: DSLContext
+) : UserAccountRepository {
+    private val dao = JUserAccountsDao(dslContext.configuration())
 
     override fun findByUserId(userId: UserAccountId): UserAccount? =
         dao.fetchOneByJUserAccountId(userId.value)?.let {
+            UserAccount(
+                id = UserAccountId(it.userAccountId),
+                name = UserAccountName(it.accountName),
+                passwordHash = PasswordHash(it.passwordHash),
+                creator = Administrator(UserAccountId(it.creatorId))
+            )
+        }
+
+    override fun findByUserName(userName: UserAccountName): UserAccount? =
+        dao.fetchOneByJAccountName(userName.value)?.let {
             UserAccount(
                 id = UserAccountId(it.userAccountId),
                 name = UserAccountName(it.accountName),

@@ -11,11 +11,16 @@ import com.stoneconvo.domain.chatroom.ChatRoomName
 import com.stoneconvo.domain.chatroom.roomMember.RoomMember
 import com.stoneconvo.domain.chatroom.roomMember.RoomMemberName
 import com.stoneconvo.domain.userAccount.UserAccountId
+import org.jooq.DSLContext
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 
 @Repository
-class JooqChatRoomRepository : ChatRoomRepository {
-    private val chatRoomDao = JChatRoomsDao()
+class JooqChatRoomRepository(
+    @Autowired
+    private val dslContext: DSLContext
+) : ChatRoomRepository {
+    private val chatRoomDao = JChatRoomsDao(dslContext.configuration())
     private val roomMembersDao = JRoomMembersDao()
 
     override fun findByRoomId(roomId: ChatRoomId): ChatRoom? =
