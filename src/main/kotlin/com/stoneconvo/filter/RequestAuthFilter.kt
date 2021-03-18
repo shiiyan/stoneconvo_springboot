@@ -29,16 +29,19 @@ class RequestAuthFilter : OncePerRequestFilter() {
             response.contentType = "application/json"
             response.characterEncoding = "UTF-8"
             response.status = HttpStatus.UNAUTHORIZED.value()
-            response.writer.print(
+            val printWriter = response.writer
+            printWriter.print(
                 """
                 {
-                    message: ${UnauthorizedErrorResponseBody.message}, 
-                    status: ${UnauthorizedErrorResponseBody.status},
-                    timestamp: ${UnauthorizedErrorResponseBody.timestamp}
+                    "message": "${UnauthorizedErrorResponseBody.message}", 
+                    "status": ${UnauthorizedErrorResponseBody.status},
+                    "timestamp": "${UnauthorizedErrorResponseBody.timestamp}"
                 }
                 """.trimIndent()
             )
-            response.writer.flush()
+            printWriter.flush()
+            printWriter.close()
+            return
         }
 
         filterChain.doFilter(request, response)
