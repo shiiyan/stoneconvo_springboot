@@ -1,6 +1,13 @@
 package com.stoneconvo.exceptions
 
-import com.stoneconvo.domain.userAccount.UserAccountId
-
-class UserAccountNotFoundException(userAccountId: UserAccountId) :
-    Exception("User Account Not Found - UserAccountId: $userAccountId")
+class UserAccountNotFoundException(
+    userId: String? = null,
+    userName: String? = null
+) :
+    Exception(
+        "User Account Not Found - ${
+        if (userId != null) "userId: $userId" else ""
+        } ${
+        if (userName != null) "userName: $userName" else ""
+        } "
+    )

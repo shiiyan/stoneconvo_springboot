@@ -49,7 +49,7 @@ class UserAccountApplicationService(
         val foundUserAccount =
             userAccountRepository.findByUserId(changeNameCommand.currentUserId)
                 ?: throw UserAccountNotFoundException(
-                    userAccountId = changeNameCommand.currentUserId
+                    userId = changeNameCommand.currentUserId.value
                 )
 
         foundUserAccount.changeName(changeNameCommand.newName)

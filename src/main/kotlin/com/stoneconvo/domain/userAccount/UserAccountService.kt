@@ -1,5 +1,6 @@
 package com.stoneconvo.domain.userAccount
 
+import com.stoneconvo.exceptions.UserAccountNotFoundException
 import com.stoneconvo.repository.userAccount.UserAccountRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -21,7 +22,9 @@ class UserAccountService(
         password: String
     ): UserAccount {
         val foundUserAccount = userAccountRepository.findByUserName(UserAccountName(name))
-            ?: throw ResponseStatusException(HttpStatus.UNAUTHORIZED)
+            ?: throw UserAccountNotFoundException(
+                userName = name
+            )
 
         val passwordHash = PasswordHash.create(password)
 

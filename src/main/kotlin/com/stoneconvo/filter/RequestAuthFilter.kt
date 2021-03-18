@@ -3,6 +3,7 @@ package com.stoneconvo.filter
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpStatus
 import org.springframework.web.filter.OncePerRequestFilter
+import java.time.LocalDateTime
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -13,20 +14,38 @@ class RequestAuthFilter : OncePerRequestFilter() {
         private const val PATTERN = "^[A-Za-z0-9]{20}$"
     }
 
+    object UnauthorizedErrorResponseBody {
+        const val message = "Request Unauthorized"
+        val status = HttpStatus.UNAUTHORIZED.value()
+        val timestamp = LocalDateTime.now()
+    }
+
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
         if (!hasUserIdInCookies(request)) {
-            response.sendError(HttpStatus.UNAUTHORIZED.value(), "Request Unauthorized")
+            response.contentType = "application/json"
+            response.characterEncoding = "UTF-8"
+            response.status = HttpStatus.UNAUTHORIZED.value()
+            response.writer.print(
+                """
+                {
+                    message: ${UnauthorizedErrorResponseBody.message}, 
+                    status: ${UnauthorizedErrorResponseBody.status},
+                    timestamp: ${UnauthorizedErrorResponseBody.timestamp}
+                }
+                """.trimIndent()
+            )
+            response.writer.flush()
         }
 
         filterChain.doFilter(request, response)
     }
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean =
-        "^(/login)$".toRegex().matches(request.requestURI)
+        "^(/user_account/login)$".toRegex().matches(request.requestURI)
 
     private fun hasUserIdInCookies(request: HttpServletRequest) =
         request.cookies
