@@ -61,7 +61,7 @@ class ChatRoomApplicationService(
 
         if (userAccountRepository.findByUserId(addMemberCommand.userAccountId) == null) {
             throw UserAccountNotFoundException(
-                userAccountId = addMemberCommand.userAccountId
+                userId = addMemberCommand.userAccountId.value
             )
         }
 
