@@ -1,6 +1,6 @@
 package com.stoneconvo.domain.userAccount
 
-import com.stoneconvo.helpers.Helper
+import com.stoneconvo.helper.Helper
 
 data class UserAccountId(val value: String) {
     companion object {

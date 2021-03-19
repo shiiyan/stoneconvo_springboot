@@ -1,6 +1,6 @@
 package com.stoneconvo.domain.userAccount
 
-import com.stoneconvo.exceptions.UserAccountNotFoundException
+import com.stoneconvo.exception.CustomException
 import com.stoneconvo.repository.userAccount.UserAccountRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -21,8 +21,9 @@ class UserAccountService(
         name: String,
         password: String
     ): UserAccount {
+        println("name: $name")
         val foundUserAccount = userAccountRepository.findByUserName(UserAccountName(name))
-            ?: throw UserAccountNotFoundException(
+            ?: throw CustomException.UserAccountNotFoundException(
                 userName = name
             )
 

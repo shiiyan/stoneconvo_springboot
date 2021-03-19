@@ -1,6 +1,6 @@
 package com.stoneconvo.domain.chatroom
 
-import com.stoneconvo.helpers.Helper
+import com.stoneconvo.helper.Helper
 
 data class ChatRoomId(val value: String) {
     companion object {

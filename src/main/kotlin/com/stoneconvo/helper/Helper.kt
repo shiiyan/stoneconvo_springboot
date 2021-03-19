@@ -1,4 +1,4 @@
-package com.stoneconvo.helpers
+package com.stoneconvo.helper
 
 import java.util.UUID
 

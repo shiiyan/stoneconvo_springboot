@@ -6,9 +6,7 @@ import com.stoneconvo.applicationService.chatRoom.command.ChangeNameCommand
 import com.stoneconvo.applicationService.chatRoom.command.CreateCommand
 import com.stoneconvo.domain.chatroom.ChatRoom
 import com.stoneconvo.domain.chatroom.roomMember.RoomMember
-import com.stoneconvo.exceptions.AdministratorNotFoundException
-import com.stoneconvo.exceptions.ChatRoomNotFoundException
-import com.stoneconvo.exceptions.UserAccountNotFoundException
+import com.stoneconvo.exception.CustomException
 import com.stoneconvo.repository.administrator.AdministratorRepository
 import com.stoneconvo.repository.chatRoom.ChatRoomRepository
 import com.stoneconvo.repository.userAccount.UserAccountRepository
@@ -28,7 +26,7 @@ class ChatRoomApplicationService(
     @Transactional
     fun create(createCommand: CreateCommand) {
         val administrator = administratorRepository.findByUserId(createCommand.currentUserId)
-            ?: throw AdministratorNotFoundException(
+            ?: throw CustomException.AdministratorNotFoundException(
                 userId = createCommand.currentUserId
             )
 
@@ -43,7 +41,7 @@ class ChatRoomApplicationService(
     @Transactional
     fun changeName(changeNameCommand: ChangeNameCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(changeNameCommand.chatRoomId)
-            ?: throw ChatRoomNotFoundException(
+            ?: throw CustomException.ChatRoomNotFoundException(
                 chatRoomId = changeNameCommand.chatRoomId
             )
 
@@ -55,12 +53,12 @@ class ChatRoomApplicationService(
     @Transactional
     fun addMember(addMemberCommand: AddMemberCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(addMemberCommand.chatRoomId)
-            ?: throw ChatRoomNotFoundException(
+            ?: throw CustomException.ChatRoomNotFoundException(
                 chatRoomId = addMemberCommand.chatRoomId
             )
 
         if (userAccountRepository.findByUserId(addMemberCommand.userAccountId) == null) {
-            throw UserAccountNotFoundException(
+            throw CustomException.UserAccountNotFoundException(
                 userId = addMemberCommand.userAccountId.value
             )
         }
@@ -83,7 +81,7 @@ class ChatRoomApplicationService(
     @Transactional
     fun changeMemberName(changeMemberNameCommand: ChangeMemberNameCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(changeMemberNameCommand.chatRoomId)
-            ?: throw ChatRoomNotFoundException(
+            ?: throw CustomException.ChatRoomNotFoundException(
                 chatRoomId = changeMemberNameCommand.chatRoomId
             )
 
