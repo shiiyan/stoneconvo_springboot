@@ -5,8 +5,7 @@ import com.stoneconvo.applicationService.userAccount.command.CreateCommand
 import com.stoneconvo.applicationService.userAccount.command.LoginCommand
 import com.stoneconvo.domain.userAccount.UserAccount
 import com.stoneconvo.domain.userAccount.UserAccountService
-import com.stoneconvo.exceptions.AdministratorNotFoundException
-import com.stoneconvo.exceptions.UserAccountNotFoundException
+import com.stoneconvo.exception.CustomException
 import com.stoneconvo.repository.administrator.AdministratorRepository
 import com.stoneconvo.repository.userAccount.UserAccountRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,7 +24,7 @@ class UserAccountApplicationService(
     @Transactional
     fun create(createCommand: CreateCommand) {
         val administrator = administratorRepository.findByUserId(createCommand.currentUserId)
-            ?: throw AdministratorNotFoundException(
+            ?: throw CustomException.AdministratorNotFoundException(
                 userId = createCommand.currentUserId
             )
 
@@ -48,7 +47,7 @@ class UserAccountApplicationService(
     fun changeName(changeNameCommand: ChangeNameCommand) {
         val foundUserAccount =
             userAccountRepository.findByUserId(changeNameCommand.currentUserId)
-                ?: throw UserAccountNotFoundException(
+                ?: throw CustomException.UserAccountNotFoundException(
                     userId = changeNameCommand.currentUserId.value
                 )
 

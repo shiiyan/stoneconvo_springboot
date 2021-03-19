@@ -3,9 +3,7 @@ package com.stoneconvo.domain.chatroom
 import com.stoneconvo.domain.administrator.Administrator
 import com.stoneconvo.domain.chatroom.roomMember.RoomMember
 import com.stoneconvo.domain.userAccount.UserAccountId
-import com.stoneconvo.exceptions.ChatRoomMemberExistException
-import com.stoneconvo.exceptions.ChatRoomMemberFullException
-import com.stoneconvo.exceptions.ChatRoomMemberNotExistException
+import com.stoneconvo.exception.CustomException
 
 class ChatRoom(
     val id: ChatRoomId,
@@ -34,11 +32,11 @@ class ChatRoom(
 
     fun addMember(newMember: RoomMember) {
         if (isMemberFull()) {
-            throw ChatRoomMemberFullException(id)
+            throw CustomException.ChatRoomMemberFullException(id)
         }
 
         if (isMemberExist(newMember.userAccountId)) {
-            throw ChatRoomMemberExistException(
+            throw CustomException.ChatRoomMemberExistException(
                 chatRoomId = id,
                 userAccountId = newMember.userAccountId
             )
@@ -49,7 +47,7 @@ class ChatRoom(
 
     fun removeMember(memberToRemove: RoomMember) {
         if (!isMemberExist(memberToRemove.userAccountId)) {
-            throw ChatRoomMemberNotExistException(
+            throw CustomException.ChatRoomMemberNotExistException(
                 chatRoomId = id,
                 userAccountId = memberToRemove.userAccountId
             )
@@ -60,7 +58,7 @@ class ChatRoom(
 
     fun changeMemberName(memberWithNewName: RoomMember) {
         if (!isMemberExist(memberWithNewName.userAccountId)) {
-            throw ChatRoomMemberNotExistException(
+            throw CustomException.ChatRoomMemberNotExistException(
                 chatRoomId = id,
                 userAccountId = memberWithNewName.userAccountId
             )
