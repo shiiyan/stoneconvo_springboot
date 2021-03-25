@@ -2,8 +2,8 @@ package com.stoneconvo.applicationService.message
 
 import com.stoneconvo.applicationService.message.command.EditMessageCommand
 import com.stoneconvo.applicationService.message.command.SendMessageCommand
+import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.domain.message.Message
-import com.stoneconvo.exception.CustomException
 import com.stoneconvo.repository.chatRoom.ChatRoomRepository
 import com.stoneconvo.repository.message.MessageRepository
 import org.springframework.beans.factory.annotation.Autowired

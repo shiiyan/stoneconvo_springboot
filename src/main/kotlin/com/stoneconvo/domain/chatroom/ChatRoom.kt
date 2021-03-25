@@ -1,9 +1,9 @@
 package com.stoneconvo.domain.chatroom
 
+import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.domain.administrator.Administrator
 import com.stoneconvo.domain.chatroom.roomMember.RoomMember
 import com.stoneconvo.domain.userAccount.UserAccountId
-import com.stoneconvo.exception.CustomException
 
 class ChatRoom(
     val id: ChatRoomId,

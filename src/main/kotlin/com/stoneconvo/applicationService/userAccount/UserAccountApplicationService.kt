@@ -2,8 +2,8 @@ package com.stoneconvo.applicationService.userAccount
 
 import com.stoneconvo.applicationService.userAccount.command.ChangeNameCommand
 import com.stoneconvo.applicationService.userAccount.command.CreateCommand
+import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.domain.userAccount.UserAccount
-import com.stoneconvo.exception.CustomException
 import com.stoneconvo.repository.administrator.AdministratorRepository
 import com.stoneconvo.repository.userAccount.UserAccountRepository
 import org.springframework.beans.factory.annotation.Autowired
