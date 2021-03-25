@@ -1,6 +1,8 @@
 package com.stoneconvo.userAccount.domain
 
-data class PasswordHash(val value: String) {
+import com.stoneconvo.common.domain.ValueObject
+
+data class PasswordHash(val value: String) : ValueObject() {
     companion object {
         fun create(plainPassword: String): PasswordHash = PasswordHash(
             // TODO: add hash function here

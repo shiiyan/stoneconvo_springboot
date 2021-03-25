@@ -11,7 +11,7 @@ import com.stoneconvo.codegen.tables.daos.JChatRoomsDao
 import com.stoneconvo.codegen.tables.daos.JRoomMembersDao
 import com.stoneconvo.codegen.tables.pojos.JChatRooms
 import com.stoneconvo.codegen.tables.pojos.JRoomMembers
-import com.stoneconvo.userAccount.domain.UserAccountId
+import com.stoneconvo.common.domain.UserAccountId
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository

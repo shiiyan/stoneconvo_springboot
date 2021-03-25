@@ -2,15 +2,16 @@ package com.stoneconvo.chatRoom.domain
 
 import com.stoneconvo.administrator.domain.Administrator
 import com.stoneconvo.chatRoom.domain.roomMember.RoomMember
+import com.stoneconvo.common.domain.Entity
+import com.stoneconvo.common.domain.UserAccountId
 import com.stoneconvo.common.exception.CustomException
-import com.stoneconvo.userAccount.domain.UserAccountId
 
 class ChatRoom(
     val id: ChatRoomId,
     var name: ChatRoomName,
     val owner: Administrator,
     val members: MutableList<RoomMember>,
-) {
+) : Entity() {
     companion object {
         fun create(
             name: ChatRoomName,

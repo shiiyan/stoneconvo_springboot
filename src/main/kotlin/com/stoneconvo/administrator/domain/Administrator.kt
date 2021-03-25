@@ -1,5 +1,6 @@
 package com.stoneconvo.administrator.domain
 
-import com.stoneconvo.userAccount.domain.UserAccountId
+import com.stoneconvo.common.domain.Entity
+import com.stoneconvo.common.domain.UserAccountId
 
-class Administrator(val id: UserAccountId)
+class Administrator(val id: UserAccountId) : Entity()

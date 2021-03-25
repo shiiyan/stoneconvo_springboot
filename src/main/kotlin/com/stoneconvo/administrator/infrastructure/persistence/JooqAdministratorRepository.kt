@@ -3,7 +3,7 @@ package com.stoneconvo.administrator.infrastructure.persistence
 import com.stoneconvo.administrator.domain.Administrator
 import com.stoneconvo.administrator.domain.AdministratorRepository
 import com.stoneconvo.codegen.tables.daos.JAdministratorsDao
-import com.stoneconvo.userAccount.domain.UserAccountId
+import com.stoneconvo.common.domain.UserAccountId
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
