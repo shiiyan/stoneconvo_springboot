@@ -1,6 +1,8 @@
 package com.stoneconvo.chatRoom.domain
 
-data class ChatRoomName(val value: String) {
+import com.stoneconvo.common.domain.ValueObject
+
+data class ChatRoomName(val value: String) : ValueObject() {
     companion object {
         private const val MIN_LENGTH = 1
         private const val MAX_LENGTH = 30

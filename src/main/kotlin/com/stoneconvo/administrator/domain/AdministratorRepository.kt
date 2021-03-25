@@ -1,6 +1,6 @@
 package com.stoneconvo.administrator.domain
 
-import com.stoneconvo.userAccount.domain.UserAccountId
+import com.stoneconvo.common.domain.UserAccountId
 
 interface AdministratorRepository {
     fun findByUserId(userId: UserAccountId): Administrator?

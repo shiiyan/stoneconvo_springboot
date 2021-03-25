@@ -3,11 +3,11 @@ package com.stoneconvo.message.infrastructure.persistence
 import com.stoneconvo.chatRoom.domain.ChatRoomId
 import com.stoneconvo.codegen.tables.daos.JMessagesDao
 import com.stoneconvo.codegen.tables.pojos.JMessages
+import com.stoneconvo.common.domain.UserAccountId
 import com.stoneconvo.message.domain.Message
 import com.stoneconvo.message.domain.MessageContent
 import com.stoneconvo.message.domain.MessageId
 import com.stoneconvo.message.domain.MessageRepository
-import com.stoneconvo.userAccount.domain.UserAccountId
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository

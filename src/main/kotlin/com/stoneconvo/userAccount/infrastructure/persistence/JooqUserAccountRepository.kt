@@ -3,9 +3,9 @@ package com.stoneconvo.userAccount.infrastructure.persistence
 import com.stoneconvo.administrator.domain.Administrator
 import com.stoneconvo.codegen.tables.daos.JUserAccountsDao
 import com.stoneconvo.codegen.tables.pojos.JUserAccounts
+import com.stoneconvo.common.domain.UserAccountId
 import com.stoneconvo.userAccount.domain.PasswordHash
 import com.stoneconvo.userAccount.domain.UserAccount
-import com.stoneconvo.userAccount.domain.UserAccountId
 import com.stoneconvo.userAccount.domain.UserAccountName
 import com.stoneconvo.userAccount.domain.UserAccountRepository
 import org.jooq.DSLContext

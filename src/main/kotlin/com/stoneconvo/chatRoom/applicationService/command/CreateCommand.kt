@@ -1,7 +1,7 @@
 package com.stoneconvo.chatRoom.applicationService.command
 
 import com.stoneconvo.chatRoom.domain.ChatRoomName
-import com.stoneconvo.userAccount.domain.UserAccountId
+import com.stoneconvo.common.domain.UserAccountId
 
 data class CreateCommand(
     val currentUserId: UserAccountId,
