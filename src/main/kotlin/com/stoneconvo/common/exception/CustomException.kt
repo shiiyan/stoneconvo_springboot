@@ -1,8 +1,8 @@
 package com.stoneconvo.common.exception
 
-import com.stoneconvo.domain.chatroom.ChatRoomId
-import com.stoneconvo.domain.message.MessageId
-import com.stoneconvo.domain.userAccount.UserAccountId
+import com.stoneconvo.chatRoom.domain.ChatRoomId
+import com.stoneconvo.message.domain.MessageId
+import com.stoneconvo.userAccount.domain.UserAccountId
 import java.lang.IllegalStateException
 
 class CustomException {
