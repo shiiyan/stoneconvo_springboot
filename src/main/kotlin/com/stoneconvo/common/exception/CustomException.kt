@@ -1,4 +1,4 @@
-package com.stoneconvo.exception
+package com.stoneconvo.common.exception
 
 import com.stoneconvo.domain.chatroom.ChatRoomId
 import com.stoneconvo.domain.message.MessageId

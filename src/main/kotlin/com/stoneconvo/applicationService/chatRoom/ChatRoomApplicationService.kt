@@ -4,9 +4,9 @@ import com.stoneconvo.applicationService.chatRoom.command.AddMemberCommand
 import com.stoneconvo.applicationService.chatRoom.command.ChangeMemberNameCommand
 import com.stoneconvo.applicationService.chatRoom.command.ChangeNameCommand
 import com.stoneconvo.applicationService.chatRoom.command.CreateCommand
+import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.domain.chatroom.ChatRoom
 import com.stoneconvo.domain.chatroom.roomMember.RoomMember
-import com.stoneconvo.exception.CustomException
 import com.stoneconvo.repository.administrator.AdministratorRepository
 import com.stoneconvo.repository.chatRoom.ChatRoomRepository
 import com.stoneconvo.repository.userAccount.UserAccountRepository

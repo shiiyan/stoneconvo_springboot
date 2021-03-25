@@ -1,6 +1,6 @@
 package com.stoneconvo.domain.message
 
-import com.stoneconvo.helper.Helper
+import com.stoneconvo.common.helper.Helper
 
 data class MessageId(val value: String) {
     companion object {

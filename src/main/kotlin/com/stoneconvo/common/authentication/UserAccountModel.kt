@@ -10,5 +10,8 @@ class UserAccountModel(
     @Column("password_hash")
     private val passwordHash: String
 ) {
-    fun verify(passwordHash: String) = this.passwordHash === passwordHash
+    fun verify(
+        userAccountName: String,
+        passwordHash: String
+    ) = this.userAccountName == userAccountName && this.passwordHash == passwordHash
 }
