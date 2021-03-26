@@ -26,6 +26,4 @@ class UserAccount(
     fun changeName(newName: UserAccountName) {
         name = newName
     }
-
-    fun verify(passwordHashToVerify: PasswordHash) = passwordHash.isSameWith(passwordHashToVerify)
 }

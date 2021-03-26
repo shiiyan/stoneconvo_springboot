@@ -16,8 +16,6 @@ data class PasswordHash(val value: String) : ValueObject() {
         validate()
     }
 
-    fun isSameWith(another: PasswordHash) = this == another
-
     // TODO: fix regex after implement password hash
     private fun validate() {
         require((PATTERN.toRegex().matches(value))) { "PasswordHash's pattern is invalid." }
