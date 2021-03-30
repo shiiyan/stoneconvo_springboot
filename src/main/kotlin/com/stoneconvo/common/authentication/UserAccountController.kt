@@ -24,7 +24,7 @@ class UserAccountController(
                 userName = request.name
             )
         if (
-            !foundUserAccount.verify(userAccountName = request.name, passwordHash = request.password)
+            !foundUserAccount.verify(userAccountName = request.name, password = request.password)
         ) {
             throw IllegalStateException("Password Not Valid")
         }

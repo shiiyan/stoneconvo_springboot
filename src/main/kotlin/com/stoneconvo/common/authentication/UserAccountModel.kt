@@ -1,5 +1,6 @@
 package com.stoneconvo.common.authentication
 
+import com.stoneconvo.common.helper.Helper
 import org.springframework.data.relational.core.mapping.Column
 
 class UserAccountModel(
@@ -12,6 +13,6 @@ class UserAccountModel(
 ) {
     fun verify(
         userAccountName: String,
-        passwordHash: String
-    ) = this.userAccountName == userAccountName && this.passwordHash == passwordHash
+        password: String
+    ) = this.userAccountName == userAccountName && this.passwordHash == Helper.generateHash(password)
 }
