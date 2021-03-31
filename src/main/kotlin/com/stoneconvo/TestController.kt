@@ -22,4 +22,8 @@ class TestController {
 
         return "new cookie is set"
     }
+
+    @GetMapping("/current_user")
+    fun showCurrentUser(@CookieValue("user-id") userId: String) =
+        "Current user id is $userId"
 }

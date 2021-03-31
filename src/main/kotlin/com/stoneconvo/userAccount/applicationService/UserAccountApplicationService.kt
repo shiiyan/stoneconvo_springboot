@@ -18,7 +18,7 @@ class UserAccountApplicationService(
     private val userAccountRepository: UserAccountRepository,
 ) {
     @Transactional
-    fun create(createCommand: CreateCommand) {
+    fun create(createCommand: CreateCommand): String {
         val administrator = administratorRepository.findByUserId(createCommand.currentUserId)
             ?: throw CustomException.AdministratorNotFoundException(
                 userId = createCommand.currentUserId
@@ -31,6 +31,8 @@ class UserAccountApplicationService(
         )
 
         userAccountRepository.insert(newUserAccount)
+
+        return newUserAccount.id.value
     }
 
     @Transactional
