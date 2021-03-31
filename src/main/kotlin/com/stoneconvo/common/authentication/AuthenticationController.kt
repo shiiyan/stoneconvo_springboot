@@ -11,13 +11,13 @@ import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-class UserAccountController(
+class AuthenticationController(
     @Autowired
-    private val userAccountRepository: UserAccountRepository
+    private val authUserRepository: AuthUserRepository
 ) {
     @PostMapping("/login")
     fun login(@RequestBody request: LoginRequestBody, response: HttpServletResponse): String {
-        val foundUserAccount = userAccountRepository.findUserAccountByName(request.name)
+        val foundUserAccount = authUserRepository.findUserAccountByName(request.name)
             ?: throw CustomException.UserAccountNotFoundException(
                 userName = request.name
             )

@@ -3,7 +3,7 @@ package com.stoneconvo.common.authentication
 import com.stoneconvo.common.helper.Helper
 import org.springframework.data.relational.core.mapping.Column
 
-class UserAccountModel(
+class AuthUser(
     @Column("user_account_id")
     val userAccountId: String,
     @Column("account_name")
