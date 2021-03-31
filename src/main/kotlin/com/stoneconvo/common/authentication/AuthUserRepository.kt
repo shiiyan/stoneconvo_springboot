@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 
 @Repository
-class UserAccountRepository(
+class AuthUserRepository(
     @Autowired
     private val dslContext: DSLContext
 ) {
@@ -14,11 +14,11 @@ class UserAccountRepository(
         private val USER_ACCOUNT = JUserAccounts()
     }
 
-    fun findUserAccountByName(name: String): UserAccountModel? =
+    fun findUserAccountByName(name: String): AuthUser? =
         dslContext
             .select()
             .from(USER_ACCOUNT)
             .where(USER_ACCOUNT.ACCOUNT_NAME.eq(name))
             .fetchOne()
-            ?.into(UserAccountModel::class.java)
+            ?.into(AuthUser::class.java)
 }
