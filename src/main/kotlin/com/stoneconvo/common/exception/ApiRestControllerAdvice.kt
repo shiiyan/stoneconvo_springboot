@@ -1,5 +1,6 @@
 package com.stoneconvo.common.exception
 
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.HttpRequestMethodNotSupportedException
@@ -10,6 +11,8 @@ import java.time.LocalDateTime
 
 @RestControllerAdvice
 class ApiRestControllerAdvice {
+    private val logger = LoggerFactory.getLogger(ApiRestControllerAdvice::class.java)
+
     data class ErrorResponseBody(
         val message: String?,
         val status: Int,
@@ -67,12 +70,17 @@ class ApiRestControllerAdvice {
     @ExceptionHandler
     fun handleGeneralException(
         ex: Exception
-    ): ResponseEntity<ErrorResponseBody> = ResponseEntity<ErrorResponseBody>(
-        ErrorResponseBody(
-            message = "Internal Server Error - ${ex.message}",
-            status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
-            timestamp = LocalDateTime.now()
-        ),
-        HttpStatus.INTERNAL_SERVER_ERROR
-    )
+    ): ResponseEntity<ErrorResponseBody> {
+        val customMessage = "Internal Server Error - ${ex.message}"
+        logger.error(customMessage, ex)
+
+        return ResponseEntity<ErrorResponseBody>(
+            ErrorResponseBody(
+                message = customMessage,
+                status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                timestamp = LocalDateTime.now()
+            ),
+            HttpStatus.INTERNAL_SERVER_ERROR
+        )
+    }
 }
