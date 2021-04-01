@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse
 @Order(1)
 class RequestAuthFilter : OncePerRequestFilter() {
     companion object {
-        private const val PATTERN = "^[A-Za-z0-9]{12}$"
+        private const val PATTERN = "^[A-Za-z0-9]{20}$"
     }
 
     object UnauthorizedErrorResponseBody {

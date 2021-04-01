@@ -76,7 +76,7 @@ class ApiRestControllerAdvice {
 
         return ResponseEntity<ErrorResponseBody>(
             ErrorResponseBody(
-                message = customMessage,
+                message = "Internal Server Error",
                 status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 timestamp = LocalDateTime.now()
             ),

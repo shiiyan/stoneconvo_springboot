@@ -5,6 +5,7 @@ import java.util.Base64
 import java.util.UUID
 
 object Helper {
+    // 長さ20の英数字ランダム文字列を生成する
     fun generateRandomId() =
         UUID.randomUUID().toString().replace("-", "").substring(12)
 
