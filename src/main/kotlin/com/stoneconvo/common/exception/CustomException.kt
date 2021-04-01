@@ -9,13 +9,13 @@ class CustomException {
     open class EntityNotFoundException(errorMessage: String) : IllegalStateException(errorMessage)
 
     class AdministratorNotFoundException(userId: UserAccountId) :
-        EntityNotFoundException("Administrator Not Found - UserId: $userId")
+        EntityNotFoundException("Administrator Not Found - UserId: ${userId.value}")
 
     class ChatRoomNotFoundException(chatRoomId: ChatRoomId) :
-        EntityNotFoundException("Chat Room Not Found - ChatRoomId: $chatRoomId")
+        EntityNotFoundException("Chat Room Not Found - ChatRoomId: ${chatRoomId.value}")
 
     class MessageNotFoundException(messageId: MessageId) :
-        EntityNotFoundException("Message Not Found - MessageId: $messageId")
+        EntityNotFoundException("Message Not Found - MessageId: ${messageId.value}")
 
     class UserAccountNotFoundException(
         userId: String? = null,
@@ -33,14 +33,14 @@ class CustomException {
 
     class ChatRoomMemberExistException(chatRoomId: ChatRoomId, userAccountId: UserAccountId) :
         EntityIllegalStateException(
-            "Chat Room Member Exists - ChatRoomId: $chatRoomId - UserAccountId: $userAccountId"
+            "Chat Room Member Exists - ChatRoomId: ${chatRoomId.value} - UserAccountId: ${userAccountId.value}"
         )
 
     class ChatRoomMemberNotExistException(chatRoomId: ChatRoomId, userAccountId: UserAccountId) :
         EntityIllegalStateException(
-            "Chat Room Member Not Exist - ChatRoomId: $chatRoomId - UserAccountId: $userAccountId"
+            "Chat Room Member Not Exist - ChatRoomId: ${chatRoomId.value} - UserAccountId: ${userAccountId.value}"
         )
 
     class ChatRoomMemberFullException(chatRoomId: ChatRoomId) :
-        EntityIllegalStateException("Chat Room Member Full - ChatRoomId: $chatRoomId")
+        EntityIllegalStateException("Chat Room Member Full - ChatRoomId: ${chatRoomId.value}")
 }
