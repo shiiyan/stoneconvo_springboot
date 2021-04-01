@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse
 @Order(1)
 class RequestAuthFilter : OncePerRequestFilter() {
     companion object {
-        private const val PATTERN = "^[A-Za-z0-9]{20}$"
+        private const val PATTERN = "^[A-Za-z0-9]{12}$"
     }
 
     object UnauthorizedErrorResponseBody {
@@ -25,6 +25,7 @@ class RequestAuthFilter : OncePerRequestFilter() {
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
+        // TODO : refine verify user-id logic
         if (!hasUserIdInCookies(request)) {
             response.contentType = "application/json"
             response.characterEncoding = "UTF-8"

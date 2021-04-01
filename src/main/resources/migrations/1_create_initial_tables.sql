@@ -1,7 +1,7 @@
 CREATE TABLE administration_authorities (
     user_account_id VARCHAR(255) NOT NULL,
     created_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE (user_account_id)
+    PRIMARY KEY (user_account_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE user_accounts (
