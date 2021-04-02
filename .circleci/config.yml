@@ -1,0 +1,15 @@
+version: 2.1
+jobs:
+  one:
+    docker:
+      - image: circleci/openjdk:11.0.3-jdk-stretch
+    steps:
+      - checkout
+      - run: echo "hello from ci"
+      - run: sleep 15
+
+workflows:
+  version: 2
+  one:
+    jobs:
+      - one
