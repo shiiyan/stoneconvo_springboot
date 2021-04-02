@@ -7,6 +7,9 @@ jobs:
       - checkout
       - run: echo "hello from ci"
       - run: sleep 15
+      - run:
+          name: "show environment"
+          command: printenv
 
 workflows:
   version: 2
