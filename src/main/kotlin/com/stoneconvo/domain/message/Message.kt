@@ -1,7 +1,8 @@
 package com.stoneconvo.domain.message
 
-import com.stoneconvo.domain.chatroom.ChatRoomId
-import com.stoneconvo.domain.userAccount.UserAccountId
+import com.stoneconvo.common.domain.Entity
+import com.stoneconvo.common.domain.UserAccountId
+import com.stoneconvo.domain.chatRoom.ChatRoomId
 import java.time.LocalDateTime
 
 class Message(
@@ -10,7 +11,7 @@ class Message(
     val roomId: ChatRoomId,
     val senderId: UserAccountId,
     val sentDateTime: LocalDateTime,
-) {
+) : Entity() {
     companion object {
         fun create(
             content: MessageContent,

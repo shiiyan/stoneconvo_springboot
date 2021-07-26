@@ -1,3 +1,0 @@
-package com.stoneconvo.applicationService.userAccount
-
-class UserAccountApplicationService

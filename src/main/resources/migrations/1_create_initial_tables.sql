@@ -1,16 +1,8 @@
-DROP TABLE messages;
-DROP TABLE room_members;
-DROP TABLE chat_rooms;
-DROP TABLE user_accounts;
-DROP TABLE administrators;
-
-
-
-CREATE TABLE administrators (
+CREATE TABLE administration_authorities (
     user_account_id VARCHAR(255) NOT NULL,
     created_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_account_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE user_accounts (
     user_account_id VARCHAR(255) NOT NULL,
@@ -20,8 +12,9 @@ CREATE TABLE user_accounts (
     created_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (user_account_id),
-    FOREIGN KEY (creator_id) REFERENCES administrators(user_account_id)
-);
+    UNIQUE (account_name),
+    FOREIGN KEY (creator_id) REFERENCES administration_authorities(user_account_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE chat_rooms (
   room_id         VARCHAR(255) NOT NULL,
@@ -30,8 +23,8 @@ CREATE TABLE chat_rooms (
   created_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (room_id),
-  FOREIGN KEY (room_owner_id) REFERENCES administrators(user_account_id)
-);
+  FOREIGN KEY (room_owner_id) REFERENCES administration_authorities(user_account_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE room_members (
     user_account_id  VARCHAR(255) NOT NULL,
@@ -42,7 +35,7 @@ CREATE TABLE room_members (
     PRIMARY KEY (user_account_id, room_id),
     FOREIGN KEY (user_account_id) REFERENCES user_accounts(user_account_id),
     FOREIGN KEY (room_id)         REFERENCES chat_rooms(room_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE messages (
     message_id      VARCHAR(255) NOT NULL,
@@ -55,4 +48,4 @@ CREATE TABLE messages (
     PRIMARY KEY (message_id),
     FOREIGN KEY (sender_id) REFERENCES room_members(user_account_id),
     FOREIGN KEY (room_id)   REFERENCES chat_rooms(room_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,11 +1,11 @@
-package com.stoneconvo.domain.message
+package com.stoneconvo.domain.chatRoom
 
 import com.stoneconvo.common.domain.ValueObject
 import com.stoneconvo.common.helper.Helper
 
-data class MessageId(val value: String) : ValueObject() {
+data class ChatRoomId(val value: String) : ValueObject() {
     companion object {
-        fun create() = MessageId(value = Helper.generateRandomId())
+        fun create() = ChatRoomId(value = Helper.generateRandomId())
         private const val PATTERN = "^[A-Za-z0-9]{20}$"
     }
 
