@@ -11,7 +11,7 @@ class AuthUserRepository(
     private val dslContext: DSLContext
 ) {
     companion object {
-        private val USER_ACCOUNT = JUserAccount()
+        private val USER_ACCOUNT = JUserAccounts()
     }
 
     fun findUserAccountByName(name: String): AuthUser? =
