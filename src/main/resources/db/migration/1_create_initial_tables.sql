@@ -1,5 +1,3 @@
-CREATE DATABASE IF NOT EXISTS stoneconvo_dev;
-
 CREATE TABLE IF NOT EXISTS administration_authorities (
     user_account_id VARCHAR(255) NOT NULL,
     created_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
