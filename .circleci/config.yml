@@ -15,7 +15,7 @@ jobs:
           name: perpare database
           command: |
             sudo apt update && sudo apt-get install default-mysql-client
-            mysql -h 127.0.0.1 -u root -p root --execute="CREATE DATABASE IF NOT EXISTS stoneconvo_dev"
+            mysql -h 127.0.0.1 -u root -proot --execute="CREATE DATABASE IF NOT EXISTS stoneconvo_dev"
       - run:
           name: run migration
           command: ./gradlew flywayMigrate
