@@ -9,6 +9,9 @@ jobs:
           name: lint
           command: ./gradlew lintKotlin
       - run:
+          name: generate jooq
+          command: ./gradlew generateJooq
+      - run:
           name: assemble
           command: ./gradlew assemble
 
