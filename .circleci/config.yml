@@ -1,18 +1,33 @@
 version: 2.1
 jobs:
-  one:
+  build:
     docker:
       - image: circleci/openjdk:11.0.3-jdk-stretch
+      - image: circleci/mysql:5.7-ram
+        environment:
+          MYSQL_ROOT_PASSWORD: root
     steps:
       - checkout
-      - run: echo "hello from ci"
-      - run: sleep 15
       - run:
-          name: "show environment"
-          command: printenv
+          name: lint
+          command: ./gradlew lintKotlin
+      - run:
+          name: perpare database
+          command: |
+            sudo apt update && sudo apt-get install default-mysql-client
+            mysql -h 127.0.0.1 -u root -proot --execute="CREATE DATABASE IF NOT EXISTS stoneconvo_dev"
+      - run:
+          name: run migration
+          command: ./gradlew flywayMigrate
+      - run:
+          name: generate jooq
+          command: ./gradlew generateJooq
+      - run:
+          name: assemble
+          command: ./gradlew assemble
 
 workflows:
   version: 2
-  one:
+  build:
     jobs:
-      - one
+      - build

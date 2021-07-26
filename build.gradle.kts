@@ -5,6 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.10.RELEASE"
 	id("org.jmailen.kotlinter") version "3.3.0"
 	id("nu.studer.jooq") version "5.2"
+	id("org.flywaydb.flyway") version "7.11.3"
 	kotlin("jvm") version "1.4.21"
 	kotlin("plugin.spring") version "1.4.21"
 }
@@ -68,6 +69,12 @@ jooq {
 			}
 		}
 	}
+}
+
+flyway {
+	url = "jdbc:mysql://localhost:3306/stoneconvo_dev"
+	user = "root"
+	password = "root"
 }
 
 buildscript {
