@@ -12,6 +12,9 @@ jobs:
           name: lint
           command: ./gradlew lintKotlin
       - run:
+          name: run migration
+          command: ./gradlewMigrate
+      - run:
           name: generate jooq
           command: ./gradlew generateJooq
       - run:
