@@ -25,13 +25,21 @@ jobs:
       - run:
           name: assemble
           command: ./gradlew assemble
-
+  deploy:
+    docker:
+      - image: circleci/openjdk:11.0.3-jdk-stretch
+    steps:
+      - checkout
+      - run:
+          name: deploy
+          command: echo depolying
 workflows:
   version: 2
   build:
     jobs:
-      - build:
-          filters:
-            branches:
-              only:
-                - develop
+      - build
+      - deploy
+        filters:
+          branches:
+            only:
+              - develop
