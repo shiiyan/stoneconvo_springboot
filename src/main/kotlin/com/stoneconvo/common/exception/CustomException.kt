@@ -29,6 +29,19 @@ class CustomException {
             } "
         )
 
+    open class EntityAlreadyExistException(errorMessage: String) : IllegalStateException(errorMessage)
+
+    class UserAccountAlreadyExistException(
+        userId: String? = null,
+        userName: String? = null
+    ) : EntityAlreadyExistException(
+        "User Account Already Exist - ${
+        if (userId != null) "userId: $userId" else ""
+        } ${
+        if (userName != null) "userName: $userName" else ""
+        } "
+    )
+
     open class EntityIllegalStateException(errorMessage: String) : IllegalStateException(errorMessage)
 
     class ChatRoomMemberExistException(chatRoomId: ChatRoomId, userAccountId: UserAccountId) :

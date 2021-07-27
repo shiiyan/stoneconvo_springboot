@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("/user-account")
+@RequestMapping("/user_account")
 class UserAccountController(
     @Autowired
     private val userAccountApplicationService: UserAccountApplicationService

@@ -5,6 +5,7 @@ import com.stoneconvo.application.command.CreateAccountCommand
 import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.domain.administrator.AdministratorRepository
 import com.stoneconvo.domain.userAccount.UserAccount
+import com.stoneconvo.domain.userAccount.UserAccountDomainService
 import com.stoneconvo.domain.userAccount.UserAccountRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -16,6 +17,8 @@ class UserAccountApplicationService(
     private val administratorRepository: AdministratorRepository,
     @Autowired
     private val userAccountRepository: UserAccountRepository,
+    @Autowired
+    private val userAccountDomainService: UserAccountDomainService
 ) {
     @Transactional
     fun create(createAccountCommand: CreateAccountCommand): String {
@@ -23,6 +26,8 @@ class UserAccountApplicationService(
             ?: throw CustomException.AdministratorNotFoundException(
                 userId = createAccountCommand.currentUserId
             )
+
+        userAccountDomainService.verifyAccountNotExist(createAccountCommand.name)
 
         val newUserAccount = UserAccount.create(
             name = createAccountCommand.name,
@@ -43,10 +48,14 @@ class UserAccountApplicationService(
                     userId = changeAccountNameCommand.currentUserId.value
                 )
 
+        userAccountDomainService.verifyAccountNotExist(changeAccountNameCommand.newName)
+
         foundUserAccount.changeName(changeAccountNameCommand.newName)
 
         userAccountRepository.update(foundUserAccount)
     }
 
-    // changePassword
+    @Transactional
+    fun changePassword() {
+    }
 }

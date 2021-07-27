@@ -32,6 +32,18 @@ class ApiRestControllerAdvice {
     )
 
     @ExceptionHandler
+    fun handleEntityAlreadyExistException(
+        ex: CustomException.EntityAlreadyExistException
+    ): ResponseEntity<ErrorResponseBody> = ResponseEntity<ErrorResponseBody>(
+        ErrorResponseBody(
+            message = ex.message,
+            status = HttpStatus.UNPROCESSABLE_ENTITY.value(),
+            timestamp = LocalDateTime.now()
+        ),
+        HttpStatus.UNPROCESSABLE_ENTITY
+    )
+
+    @ExceptionHandler
     fun handleEntityIllegalStateException(
         ex: CustomException.EntityIllegalStateException
     ): ResponseEntity<ErrorResponseBody> = ResponseEntity<ErrorResponseBody>(
