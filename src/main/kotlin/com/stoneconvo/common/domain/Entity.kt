@@ -1,3 +1,3 @@
 package com.stoneconvo.common.domain
 
-abstract class Entity
+abstract class Entit
