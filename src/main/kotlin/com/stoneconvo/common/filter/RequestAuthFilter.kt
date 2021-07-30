@@ -1,23 +1,28 @@
 package com.stoneconvo.common.filter
 
+import com.stoneconvo.common.authorization.AuthorizationService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpStatus
+import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
+import java.lang.Exception
 import java.time.LocalDateTime
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Order(1)
-class RequestAuthFilter : OncePerRequestFilter() {
-    companion object {
-        private const val PATTERN = "^[A-Za-z0-9]{20}$"
-    }
+@Component
+class RequestAuthFilter(
+    @Autowired
+    private val authorizationService: AuthorizationService
+) : OncePerRequestFilter() {
 
-    object UnauthorizedErrorResponseBody {
+    object UnauthorizedResponseBody {
         const val message = "Request Unauthorized"
         val status = HttpStatus.FORBIDDEN.value()
-        val timestamp = LocalDateTime.now()
+        val timestamp: LocalDateTime = LocalDateTime.now()
     }
 
     override fun doFilterInternal(
@@ -25,8 +30,9 @@ class RequestAuthFilter : OncePerRequestFilter() {
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        // TODO : refine verify user-id logic
-        if (!hasUserIdInCookies(request)) {
+        try {
+            authorizationService.authorize()
+        } catch (e: Exception) {
             response.contentType = "application/json"
             response.characterEncoding = "UTF-8"
             response.status = HttpStatus.FORBIDDEN.value()
@@ -34,15 +40,14 @@ class RequestAuthFilter : OncePerRequestFilter() {
             printWriter.print(
                 """
                 {
-                    "message": "${UnauthorizedErrorResponseBody.message}", 
-                    "status": ${UnauthorizedErrorResponseBody.status},
-                    "timestamp": "${UnauthorizedErrorResponseBody.timestamp}"
+                    "message": "${UnauthorizedResponseBody.message}", 
+                    "status": ${UnauthorizedResponseBody.status},
+                    "timestamp": "${UnauthorizedResponseBody.timestamp}"
                 }
                 """.trimIndent()
             )
             printWriter.flush()
             printWriter.close()
-            return
         }
 
         filterChain.doFilter(request, response)
@@ -50,9 +55,4 @@ class RequestAuthFilter : OncePerRequestFilter() {
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean =
         "^(/login.*)$".toRegex().matches(request.requestURI)
-
-    private fun hasUserIdInCookies(request: HttpServletRequest) =
-        request.cookies
-            ?.any { cookie -> cookie.name == "user-id" && PATTERN.toRegex().matches(cookie.value) }
-            ?: false
 }

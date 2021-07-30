@@ -6,13 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletResponse
+import javax.servlet.http.HttpSession
 
 @RestController
 class AuthenticationController(
     @Autowired
-    private val authUserRepository: AuthUserRepository
+    private val authUserRepository: AuthUserRepository,
+    @Autowired
+    private val httpSession: HttpSession
 ) {
     @PostMapping("/login")
     fun login(@RequestBody request: LoginRequestBody, response: HttpServletResponse): String {
@@ -26,10 +28,13 @@ class AuthenticationController(
             throw CustomException.UnauthorizedException("Username Or Password Not Valid")
         }
 
-        response.addCookie(
-            Cookie("user-id", foundUserAccount.userAccountId)
-        )
+        httpSession.setAttribute("user-id", foundUserAccount.userAccountId)
 
         return foundUserAccount.userAccountId
+    }
+
+    @PostMapping("/logout")
+    fun logout() {
+        httpSession.removeAttribute("user-id")
     }
 }

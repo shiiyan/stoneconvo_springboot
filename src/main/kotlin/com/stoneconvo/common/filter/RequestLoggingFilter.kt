@@ -1,10 +1,12 @@
 package com.stoneconvo.common.filter
 
 import org.springframework.core.annotation.Order
+import org.springframework.stereotype.Component
 import org.springframework.web.filter.AbstractRequestLoggingFilter
 import javax.servlet.http.HttpServletRequest
 
 @Order(1)
+@Component
 class RequestLoggingFilter : AbstractRequestLoggingFilter() {
     init {
         super.setIncludeClientInfo(true)

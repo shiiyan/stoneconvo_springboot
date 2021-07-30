@@ -21,4 +21,12 @@ class AuthUserRepository(
             .where(USER_ACCOUNT.ACCOUNT_NAME.eq(name))
             .fetchOne()
             ?.into(AuthUser::class.java)
+
+    fun findUserAccountById(id: String): AuthUser? =
+        dslContext
+            .select()
+            .from(USER_ACCOUNT)
+            .where(USER_ACCOUNT.USER_ACCOUNT_ID.eq(id))
+            .fetchOne()
+            ?.into(AuthUser::class.java)
 }

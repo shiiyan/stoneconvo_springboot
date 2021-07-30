@@ -8,6 +8,8 @@ import java.lang.IllegalStateException
 class CustomException {
     class UnauthorizedException(errorMessage: String) : IllegalStateException(errorMessage)
 
+    class ForbiddenException(errorMessage: String) : IllegalStateException(errorMessage)
+
     open class EntityNotFoundException(errorMessage: String) : IllegalStateException(errorMessage)
 
     class AdministratorNotFoundException(userId: UserAccountId) :

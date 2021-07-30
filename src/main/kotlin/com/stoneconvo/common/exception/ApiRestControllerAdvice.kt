@@ -33,6 +33,18 @@ class ApiRestControllerAdvice {
     )
 
     @ExceptionHandler
+    fun handleForbiddenException(
+        ex: CustomException.ForbiddenException
+    ): ResponseEntity<ErrorResponseBody> = ResponseEntity<ErrorResponseBody>(
+        ErrorResponseBody(
+            message = ex.message,
+            status = HttpStatus.FORBIDDEN.value(),
+            timestamp = LocalDateTime.now()
+        ),
+        HttpStatus.FORBIDDEN
+    )
+
+    @ExceptionHandler
     fun handleEntityNotFoundException(
         ex: CustomException.EntityNotFoundException
     ): ResponseEntity<ErrorResponseBody> = ResponseEntity<ErrorResponseBody>(

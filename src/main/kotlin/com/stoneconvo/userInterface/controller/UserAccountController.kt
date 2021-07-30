@@ -3,10 +3,10 @@ package com.stoneconvo.userInterface.controller
 import com.stoneconvo.application.UserAccountApplicationService
 import com.stoneconvo.application.command.ChangeAccountNameCommand
 import com.stoneconvo.application.command.CreateAccountCommand
+import com.stoneconvo.common.authorization.AuthorizationService
 import com.stoneconvo.userInterface.controller.requestBody.ChangeAccountNameRequestBody
 import com.stoneconvo.userInterface.controller.requestBody.CreateAccountRequestBody
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.CookieValue
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -17,16 +17,16 @@ import javax.validation.Valid
 @RequestMapping("/user_account")
 class UserAccountController(
     @Autowired
-    private val userAccountApplicationService: UserAccountApplicationService
+    private val userAccountApplicationService: UserAccountApplicationService,
+    @Autowired
+    private val authorizationService: AuthorizationService
 ) {
-    @PostMapping("/handleCreate")
+    @PostMapping("/create")
     fun create(
-        @Valid @RequestBody createAccountRequestBody: CreateAccountRequestBody,
-        // TODO : handleCreate service for fetching current user id
-        @CookieValue("user-id") currentUserId: String
+        @Valid @RequestBody createAccountRequestBody: CreateAccountRequestBody
     ): String {
         val command = CreateAccountCommand.create(
-            currentUserId = currentUserId,
+            currentUserId = authorizationService.getCurrentUserId(),
             name = createAccountRequestBody.name,
             password = createAccountRequestBody.password
         )
@@ -36,11 +36,10 @@ class UserAccountController(
 
     @PostMapping("/change_name")
     fun changeName(
-        @Valid @RequestBody changeAccountNameRequestBody: ChangeAccountNameRequestBody,
-        @CookieValue("user-id") currentUserId: String
+        @Valid @RequestBody changeAccountNameRequestBody: ChangeAccountNameRequestBody
     ) {
         val command = ChangeAccountNameCommand.create(
-            currentUserId = currentUserId,
+            currentUserId = authorizationService.getCurrentUserId(),
             newName = changeAccountNameRequestBody.name
         )
 
