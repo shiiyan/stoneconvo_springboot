@@ -24,7 +24,7 @@ class ChatRoomApplicationService(
     private val userAccountRepository: UserAccountRepository,
 ) {
     @Transactional
-    fun create(createRoomCommand: CreateRoomCommand) {
+    fun handleCreate(createRoomCommand: CreateRoomCommand): String {
         val administrator = administratorRepository.findByUserId(createRoomCommand.currentUserId)
             ?: throw CustomException.AdministratorNotFoundException(
                 userId = createRoomCommand.currentUserId
@@ -36,22 +36,27 @@ class ChatRoomApplicationService(
         )
 
         chatRoomRepository.save(newChatRoom)
+
+        return newChatRoom.id.value
     }
 
     @Transactional
-    fun changeName(changeRoomNameCommand: ChangeRoomNameCommand) {
+    fun handleChangeName(changeRoomNameCommand: ChangeRoomNameCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(changeRoomNameCommand.chatRoomId)
             ?: throw CustomException.ChatRoomNotFoundException(
                 chatRoomId = changeRoomNameCommand.chatRoomId
             )
 
-        foundChatRoom.changeName(changeRoomNameCommand.newName)
+        foundChatRoom.changeName(
+            newName = changeRoomNameCommand.newName,
+            currentUserId = changeRoomNameCommand.currentUserId
+        )
 
         chatRoomRepository.save(foundChatRoom)
     }
 
     @Transactional
-    fun addMember(addMemberCommand: AddMemberCommand) {
+    fun handleAddMember(addMemberCommand: AddMemberCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(addMemberCommand.chatRoomId)
             ?: throw CustomException.ChatRoomNotFoundException(
                 chatRoomId = addMemberCommand.chatRoomId
@@ -74,12 +79,12 @@ class ChatRoomApplicationService(
     }
 
     @Transactional
-    fun removeMember() {
+    fun handleRemoveMember() {
         TODO()
     }
 
     @Transactional
-    fun changeMemberName(changeMemberNameCommand: ChangeMemberNameCommand) {
+    fun handleChangeMemberName(changeMemberNameCommand: ChangeMemberNameCommand) {
         val foundChatRoom = chatRoomRepository.findByRoomId(changeMemberNameCommand.chatRoomId)
             ?: throw CustomException.ChatRoomNotFoundException(
                 chatRoomId = changeMemberNameCommand.chatRoomId

@@ -14,7 +14,7 @@ class SessionAuthorizationService(
     private val httpSession: HttpSession
 ) : AuthorizationService {
     override fun authorize() {
-        authUserRepository.findUserAccountById(this.getCurrentUserId())
+        authUserRepository.findUserAccountById(getCurrentUserId())
             ?: throw CustomException.ForbiddenException("No Authorization")
     }
 

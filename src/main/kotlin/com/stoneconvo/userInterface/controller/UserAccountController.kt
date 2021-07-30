@@ -2,9 +2,11 @@ package com.stoneconvo.userInterface.controller
 
 import com.stoneconvo.application.UserAccountApplicationService
 import com.stoneconvo.application.command.ChangeAccountNameCommand
+import com.stoneconvo.application.command.ChangePasswordCommand
 import com.stoneconvo.application.command.CreateAccountCommand
 import com.stoneconvo.common.authorization.AuthorizationService
 import com.stoneconvo.userInterface.controller.requestBody.ChangeAccountNameRequestBody
+import com.stoneconvo.userInterface.controller.requestBody.ChangePasswordRequestBody
 import com.stoneconvo.userInterface.controller.requestBody.CreateAccountRequestBody
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
@@ -31,7 +33,9 @@ class UserAccountController(
             password = createAccountRequestBody.password
         )
 
-        return userAccountApplicationService.handleCreate(command)
+        val accountId = userAccountApplicationService.handleCreate(command)
+
+        return accountId
     }
 
     @PostMapping("/change_name")
@@ -44,5 +48,17 @@ class UserAccountController(
         )
 
         userAccountApplicationService.handleChangeName(command)
+    }
+
+    @PostMapping("/change_password")
+    fun changePassword(
+        @Valid @RequestBody changePasswordRequestBody: ChangePasswordRequestBody
+    ) {
+        val command = ChangePasswordCommand.create(
+            currentUserId = authorizationService.getCurrentUserId(),
+            password = changePasswordRequestBody.password
+        )
+
+        userAccountApplicationService.handleChangePassword(command)
     }
 }

@@ -24,7 +24,14 @@ class ChatRoom(
         )
     }
 
-    fun changeName(newName: ChatRoomName) {
+    fun changeName(newName: ChatRoomName, currentUserId: UserAccountId) {
+        if (!isMemberExist(currentUserId)) {
+            throw CustomException.ChatRoomMemberNotExistException(
+                chatRoomId = id,
+                userAccountId = currentUserId
+            )
+        }
+
         name = newName
     }
 
