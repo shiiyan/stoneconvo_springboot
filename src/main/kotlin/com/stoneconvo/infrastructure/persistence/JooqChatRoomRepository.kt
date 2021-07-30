@@ -22,7 +22,7 @@ class JooqChatRoomRepository(
     private val dslContext: DSLContext
 ) : ChatRoomRepository {
     private val chatRoomDao = JChatRoomsDao(dslContext.configuration())
-    private val roomMembersDao = JRoomMembersDao()
+    private val roomMembersDao = JRoomMembersDao(dslContext.configuration())
 
     override fun findByRoomId(roomId: ChatRoomId): ChatRoom? =
         chatRoomDao.fetchOneByJRoomId(roomId.value)?.let {
