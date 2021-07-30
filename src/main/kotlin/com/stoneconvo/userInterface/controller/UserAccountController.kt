@@ -1,13 +1,13 @@
 package com.stoneconvo.userInterface.controller
 
 import com.stoneconvo.application.UserAccountApplicationService
-import com.stoneconvo.application.command.ChangeAccountNameCommand
-import com.stoneconvo.application.command.ChangePasswordCommand
-import com.stoneconvo.application.command.CreateAccountCommand
+import com.stoneconvo.application.command.userAccount.ChangeAccountNameCommand
+import com.stoneconvo.application.command.userAccount.ChangePasswordCommand
+import com.stoneconvo.application.command.userAccount.CreateAccountCommand
 import com.stoneconvo.common.authorization.AuthorizationService
-import com.stoneconvo.userInterface.controller.requestBody.ChangeAccountNameRequestBody
-import com.stoneconvo.userInterface.controller.requestBody.ChangePasswordRequestBody
-import com.stoneconvo.userInterface.controller.requestBody.CreateAccountRequestBody
+import com.stoneconvo.userInterface.controller.requestBody.userAccount.ChangeAccountNameRequestBody
+import com.stoneconvo.userInterface.controller.requestBody.userAccount.ChangePasswordRequestBody
+import com.stoneconvo.userInterface.controller.requestBody.userAccount.CreateAccountRequestBody
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

@@ -1,4 +1,4 @@
-package com.stoneconvo.application.command
+package com.stoneconvo.application.command.message
 
 import com.stoneconvo.common.domain.UserAccountId
 import com.stoneconvo.domain.chatRoom.ChatRoomId

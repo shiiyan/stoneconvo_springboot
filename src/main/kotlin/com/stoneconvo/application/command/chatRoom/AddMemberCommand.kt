@@ -1,12 +1,12 @@
-package com.stoneconvo.application.command
+package com.stoneconvo.application.command.chatRoom
 
 import com.stoneconvo.common.domain.UserAccountId
 import com.stoneconvo.domain.chatRoom.ChatRoomId
 import com.stoneconvo.domain.chatRoom.roomMember.RoomMemberName
 
-data class ChangeMemberNameCommand(
+data class AddMemberCommand(
     val chatRoomId: ChatRoomId,
-    val newName: RoomMemberName,
+    val name: RoomMemberName,
     val userAccountId: UserAccountId,
     val currentUserId: UserAccountId
 ) {
@@ -16,9 +16,9 @@ data class ChangeMemberNameCommand(
             name: String,
             userAccountId: String,
             currentUserId: String
-        ) = ChangeMemberNameCommand(
+        ) = AddMemberCommand(
             chatRoomId = ChatRoomId(chatRoomId),
-            newName = RoomMemberName(name),
+            name = RoomMemberName(name),
             userAccountId = UserAccountId(userAccountId),
             currentUserId = UserAccountId(currentUserId)
         )

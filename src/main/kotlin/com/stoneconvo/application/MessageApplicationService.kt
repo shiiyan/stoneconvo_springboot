@@ -1,7 +1,7 @@
 package com.stoneconvo.application
 
-import com.stoneconvo.application.command.EditMessageCommand
-import com.stoneconvo.application.command.SendMessageCommand
+import com.stoneconvo.application.command.message.EditMessageCommand
+import com.stoneconvo.application.command.message.SendMessageCommand
 import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.domain.chatRoom.ChatRoomRepository
 import com.stoneconvo.domain.message.Message

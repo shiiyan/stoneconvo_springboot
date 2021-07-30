@@ -1,17 +1,17 @@
 package com.stoneconvo.userInterface.controller
 
 import com.stoneconvo.application.ChatRoomApplicationService
-import com.stoneconvo.application.command.AddMemberCommand
-import com.stoneconvo.application.command.ChangeMemberNameCommand
-import com.stoneconvo.application.command.ChangeRoomNameCommand
-import com.stoneconvo.application.command.CreateRoomCommand
-import com.stoneconvo.application.command.RemoveMemberCommand
+import com.stoneconvo.application.command.chatRoom.AddMemberCommand
+import com.stoneconvo.application.command.chatRoom.ChangeMemberNameCommand
+import com.stoneconvo.application.command.chatRoom.ChangeRoomNameCommand
+import com.stoneconvo.application.command.chatRoom.CreateRoomCommand
+import com.stoneconvo.application.command.chatRoom.RemoveMemberCommand
 import com.stoneconvo.common.authorization.AuthorizationService
-import com.stoneconvo.userInterface.controller.requestBody.AddMemberRequestBody
-import com.stoneconvo.userInterface.controller.requestBody.ChangeMemberNameRequestBody
-import com.stoneconvo.userInterface.controller.requestBody.ChangeRoomNameRequestBody
-import com.stoneconvo.userInterface.controller.requestBody.CreateRoomRequestBody
-import com.stoneconvo.userInterface.controller.requestBody.RemoveMemberRequestBody
+import com.stoneconvo.userInterface.controller.requestBody.chatRoom.AddMemberRequestBody
+import com.stoneconvo.userInterface.controller.requestBody.chatRoom.ChangeMemberNameRequestBody
+import com.stoneconvo.userInterface.controller.requestBody.chatRoom.ChangeRoomNameRequestBody
+import com.stoneconvo.userInterface.controller.requestBody.chatRoom.CreateRoomRequestBody
+import com.stoneconvo.userInterface.controller.requestBody.chatRoom.RemoveMemberRequestBody
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

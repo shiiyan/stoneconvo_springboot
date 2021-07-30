@@ -1,4 +1,4 @@
-package com.stoneconvo.userInterface.controller.requestBody
+package com.stoneconvo.userInterface.controller.requestBody.chatRoom
 
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern

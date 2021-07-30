@@ -1,8 +1,8 @@
 package com.stoneconvo.application
 
-import com.stoneconvo.application.command.ChangeAccountNameCommand
-import com.stoneconvo.application.command.ChangePasswordCommand
-import com.stoneconvo.application.command.CreateAccountCommand
+import com.stoneconvo.application.command.userAccount.ChangeAccountNameCommand
+import com.stoneconvo.application.command.userAccount.ChangePasswordCommand
+import com.stoneconvo.application.command.userAccount.CreateAccountCommand
 import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.domain.administrator.AdministratorRepository
 import com.stoneconvo.domain.userAccount.UserAccount

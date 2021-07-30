@@ -1,10 +1,10 @@
 package com.stoneconvo.application
 
-import com.stoneconvo.application.command.AddMemberCommand
-import com.stoneconvo.application.command.ChangeMemberNameCommand
-import com.stoneconvo.application.command.ChangeRoomNameCommand
-import com.stoneconvo.application.command.CreateRoomCommand
-import com.stoneconvo.application.command.RemoveMemberCommand
+import com.stoneconvo.application.command.chatRoom.AddMemberCommand
+import com.stoneconvo.application.command.chatRoom.ChangeMemberNameCommand
+import com.stoneconvo.application.command.chatRoom.ChangeRoomNameCommand
+import com.stoneconvo.application.command.chatRoom.CreateRoomCommand
+import com.stoneconvo.application.command.chatRoom.RemoveMemberCommand
 import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.domain.administrator.AdministratorRepository
 import com.stoneconvo.domain.chatRoom.ChatRoom

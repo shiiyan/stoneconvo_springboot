@@ -1,4 +1,4 @@
-package com.stoneconvo.userInterface.controller.requestBody
+package com.stoneconvo.userInterface.controller.requestBody.userAccount
 
 import javax.validation.constraints.NotBlank
 
