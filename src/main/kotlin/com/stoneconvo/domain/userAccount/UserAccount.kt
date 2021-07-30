@@ -7,7 +7,7 @@ import com.stoneconvo.domain.administrator.Administrator
 class UserAccount(
     val id: UserAccountId,
     var name: UserAccountName,
-    val passwordHash: PasswordHash,
+    var passwordHash: PasswordHash,
     val creator: Administrator
 ) : Entity() {
     companion object {
@@ -25,5 +25,9 @@ class UserAccount(
 
     fun changeName(newName: UserAccountName) {
         name = newName
+    }
+
+    fun changePassword(newPasswordHash: PasswordHash) {
+        passwordHash = newPasswordHash
     }
 }

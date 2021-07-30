@@ -6,6 +6,8 @@ import com.stoneconvo.domain.message.MessageId
 import java.lang.IllegalStateException
 
 class CustomException {
+    class UnauthorizedException(errorMessage: String) : IllegalStateException(errorMessage)
+
     open class EntityNotFoundException(errorMessage: String) : IllegalStateException(errorMessage)
 
     class AdministratorNotFoundException(userId: UserAccountId) :

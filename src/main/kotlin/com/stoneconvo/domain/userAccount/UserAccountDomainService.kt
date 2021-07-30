@@ -9,7 +9,7 @@ class UserAccountDomainService(
     @Autowired
     private val userAccountRepository: UserAccountRepository,
 ) {
-    fun verifyAccountNotExist(name: UserAccountName) {
+    fun verifyAccountNotExistByName(name: UserAccountName) {
         if (userAccountRepository.findByUserName(name) != null) {
             throw CustomException.UserAccountAlreadyExistException(
                 userName = name.value

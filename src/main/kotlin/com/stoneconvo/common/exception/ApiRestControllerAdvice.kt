@@ -4,6 +4,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.HttpRequestMethodNotSupportedException
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.servlet.NoHandlerFoundException
@@ -17,6 +18,18 @@ class ApiRestControllerAdvice {
         val message: String?,
         val status: Int,
         val timestamp: LocalDateTime
+    )
+
+    @ExceptionHandler
+    fun handleUnauthorizedException(
+        ex: CustomException.UnauthorizedException
+    ): ResponseEntity<ErrorResponseBody> = ResponseEntity<ErrorResponseBody>(
+        ErrorResponseBody(
+            message = ex.message,
+            status = HttpStatus.UNAUTHORIZED.value(),
+            timestamp = LocalDateTime.now()
+        ),
+        HttpStatus.UNAUTHORIZED
     )
 
     @ExceptionHandler
@@ -77,6 +90,18 @@ class ApiRestControllerAdvice {
             timestamp = LocalDateTime.now()
         ),
         HttpStatus.METHOD_NOT_ALLOWED
+    )
+
+    @ExceptionHandler
+    fun handleMethodArgumentNotValidException(
+        ex: MethodArgumentNotValidException
+    ): ResponseEntity<ErrorResponseBody> = ResponseEntity<ErrorResponseBody>(
+        ErrorResponseBody(
+            message = "Method Argument Not Valid",
+            status = HttpStatus.UNPROCESSABLE_ENTITY.value(),
+            timestamp = LocalDateTime.now()
+        ),
+        HttpStatus.UNPROCESSABLE_ENTITY
     )
 
     @ExceptionHandler

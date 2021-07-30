@@ -1,6 +1,7 @@
 package com.stoneconvo.application
 
 import com.stoneconvo.application.command.ChangeAccountNameCommand
+import com.stoneconvo.application.command.ChangePasswordCommand
 import com.stoneconvo.application.command.CreateAccountCommand
 import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.domain.administrator.AdministratorRepository
@@ -21,13 +22,13 @@ class UserAccountApplicationService(
     private val userAccountDomainService: UserAccountDomainService
 ) {
     @Transactional
-    fun create(createAccountCommand: CreateAccountCommand): String {
+    fun handleCreate(createAccountCommand: CreateAccountCommand): String {
         val administrator = administratorRepository.findByUserId(createAccountCommand.currentUserId)
             ?: throw CustomException.AdministratorNotFoundException(
                 userId = createAccountCommand.currentUserId
             )
 
-        userAccountDomainService.verifyAccountNotExist(createAccountCommand.name)
+        userAccountDomainService.verifyAccountNotExistByName(createAccountCommand.name)
 
         val newUserAccount = UserAccount.create(
             name = createAccountCommand.name,
@@ -41,14 +42,14 @@ class UserAccountApplicationService(
     }
 
     @Transactional
-    fun changeName(changeAccountNameCommand: ChangeAccountNameCommand) {
+    fun handleChangeName(changeAccountNameCommand: ChangeAccountNameCommand) {
         val foundUserAccount =
             userAccountRepository.findByUserId(changeAccountNameCommand.currentUserId)
                 ?: throw CustomException.UserAccountNotFoundException(
                     userId = changeAccountNameCommand.currentUserId.value
                 )
 
-        userAccountDomainService.verifyAccountNotExist(changeAccountNameCommand.newName)
+        userAccountDomainService.verifyAccountNotExistByName(changeAccountNameCommand.newName)
 
         foundUserAccount.changeName(changeAccountNameCommand.newName)
 
@@ -56,6 +57,15 @@ class UserAccountApplicationService(
     }
 
     @Transactional
-    fun changePassword() {
+    fun handleChangePassword(changePasswordCommand: ChangePasswordCommand) {
+        val foundUserAccount =
+            userAccountRepository.findByUserId(changePasswordCommand.currentUserId)
+                ?: throw CustomException.UserAccountNotFoundException(
+                    userId = changePasswordCommand.currentUserId.value
+                )
+
+        foundUserAccount.changePassword(changePasswordCommand.passwordHash)
+
+        userAccountRepository.update(foundUserAccount)
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import java.lang.IllegalStateException
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletResponse
 
@@ -24,7 +23,7 @@ class AuthenticationController(
         if (
             !foundUserAccount.verify(userAccountName = request.name, password = request.password)
         ) {
-            throw IllegalStateException("Password Not Valid")
+            throw CustomException.UnauthorizedException("Username Or Password Not Valid")
         }
 
         response.addCookie(

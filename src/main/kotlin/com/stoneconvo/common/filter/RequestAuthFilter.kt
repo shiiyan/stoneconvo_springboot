@@ -16,7 +16,7 @@ class RequestAuthFilter : OncePerRequestFilter() {
 
     object UnauthorizedErrorResponseBody {
         const val message = "Request Unauthorized"
-        val status = HttpStatus.UNAUTHORIZED.value()
+        val status = HttpStatus.FORBIDDEN.value()
         val timestamp = LocalDateTime.now()
     }
 
@@ -29,7 +29,7 @@ class RequestAuthFilter : OncePerRequestFilter() {
         if (!hasUserIdInCookies(request)) {
             response.contentType = "application/json"
             response.characterEncoding = "UTF-8"
-            response.status = HttpStatus.UNAUTHORIZED.value()
+            response.status = HttpStatus.FORBIDDEN.value()
             val printWriter = response.writer
             printWriter.print(
                 """
