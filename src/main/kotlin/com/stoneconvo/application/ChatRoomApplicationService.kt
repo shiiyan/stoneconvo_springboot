@@ -4,6 +4,7 @@ import com.stoneconvo.application.command.AddMemberCommand
 import com.stoneconvo.application.command.ChangeMemberNameCommand
 import com.stoneconvo.application.command.ChangeRoomNameCommand
 import com.stoneconvo.application.command.CreateRoomCommand
+import com.stoneconvo.application.command.RemoveMemberCommand
 import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.domain.administrator.AdministratorRepository
 import com.stoneconvo.domain.chatRoom.ChatRoom
@@ -62,6 +63,16 @@ class ChatRoomApplicationService(
                 chatRoomId = addMemberCommand.chatRoomId
             )
 
+        if (
+            !foundChatRoom.isMemberExist(addMemberCommand.currentUserId) &&
+            !foundChatRoom.isOwner(addMemberCommand.currentUserId)
+        ) {
+            throw CustomException.AddRoomMemberUnauthorizedException(
+                userAccountId = addMemberCommand.currentUserId,
+                chatRoomId = addMemberCommand.chatRoomId
+            )
+        }
+
         if (userAccountRepository.findByUserId(addMemberCommand.userAccountId) == null) {
             throw CustomException.UserAccountNotFoundException(
                 userId = addMemberCommand.userAccountId.value
@@ -79,8 +90,28 @@ class ChatRoomApplicationService(
     }
 
     @Transactional
-    fun handleRemoveMember() {
-        TODO()
+    fun handleRemoveMember(removeMemberCommand: RemoveMemberCommand) {
+        val foundChatRoom = chatRoomRepository.findByRoomId(removeMemberCommand.chatRoomId)
+            ?: throw CustomException.ChatRoomNotFoundException(
+                chatRoomId = removeMemberCommand.chatRoomId
+            )
+
+        when {
+            foundChatRoom.isOwner(removeMemberCommand.currentUserId) -> {
+                foundChatRoom.removeMember(removeMemberCommand.userAccountId)
+            }
+            foundChatRoom.isMemberExist(removeMemberCommand.currentUserId) -> {
+                foundChatRoom.removeMember(removeMemberCommand.currentUserId)
+            }
+            else -> {
+                throw CustomException.RemoveMemberUnauthorizedException(
+                    userAccountId = removeMemberCommand.currentUserId,
+                    chatRoomId = removeMemberCommand.chatRoomId
+                )
+            }
+        }
+
+        chatRoomRepository.save(foundChatRoom)
     }
 
     @Transactional
@@ -90,12 +121,30 @@ class ChatRoomApplicationService(
                 chatRoomId = changeMemberNameCommand.chatRoomId
             )
 
-        foundChatRoom.changeMemberName(
-            RoomMember(
-                name = changeMemberNameCommand.newName,
-                userAccountId = changeMemberNameCommand.userAccountId
-            )
-        )
+        when {
+            foundChatRoom.isOwner(changeMemberNameCommand.currentUserId) -> {
+                foundChatRoom.changeMemberName(
+                    RoomMember(
+                        name = changeMemberNameCommand.newName,
+                        userAccountId = changeMemberNameCommand.userAccountId
+                    )
+                )
+            }
+            foundChatRoom.isMemberExist(changeMemberNameCommand.currentUserId) -> {
+                foundChatRoom.changeMemberName(
+                    RoomMember(
+                        name = changeMemberNameCommand.newName,
+                        userAccountId = changeMemberNameCommand.currentUserId
+                    )
+                )
+            }
+            else -> {
+                throw CustomException.ChangeMemberNameUnauthorizedException(
+                    userAccountId = changeMemberNameCommand.currentUserId,
+                    chatRoomId = changeMemberNameCommand.chatRoomId
+                )
+            }
+        }
 
         chatRoomRepository.save(foundChatRoom)
     }

@@ -38,6 +38,8 @@ class ChatRoom(
     fun isMemberExist(userAccountId: UserAccountId): Boolean = members
         .map { it.userAccountId }.contains(userAccountId)
 
+    fun isOwner(userAccountId: UserAccountId): Boolean = owner == Administrator(userAccountId)
+
     fun addMember(newMember: RoomMember) {
         if (isMemberFull()) {
             throw CustomException.ChatRoomMemberFullException(id)
@@ -53,15 +55,15 @@ class ChatRoom(
         members.add(newMember)
     }
 
-    fun removeMember(memberToRemove: RoomMember) {
-        if (!isMemberExist(memberToRemove.userAccountId)) {
+    fun removeMember(memberIdToRemove: UserAccountId) {
+        if (!isMemberExist(memberIdToRemove)) {
             throw CustomException.ChatRoomMemberNotExistException(
                 chatRoomId = id,
-                userAccountId = memberToRemove.userAccountId
+                userAccountId = memberIdToRemove
             )
         }
 
-        members.remove(memberToRemove)
+        members.removeIf { it.userAccountId == memberIdToRemove }
     }
 
     fun changeMemberName(memberWithNewName: RoomMember) {
@@ -73,7 +75,7 @@ class ChatRoom(
         }
 
         members.replaceAll {
-            if (it.userAccountId.equals(memberWithNewName.userAccountId)) memberWithNewName
+            if (it.userAccountId == memberWithNewName.userAccountId) memberWithNewName
             else it
         }
     }

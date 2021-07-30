@@ -60,4 +60,21 @@ class CustomException {
 
     class ChatRoomMemberFullException(chatRoomId: ChatRoomId) :
         EntityIllegalStateException("Chat Room Member Full - ChatRoomId: ${chatRoomId.value}")
+
+    open class UseCaseIllegalStateException(errorMessage: String) : IllegalStateException(errorMessage)
+
+    class AddRoomMemberUnauthorizedException(chatRoomId: ChatRoomId, userAccountId: UserAccountId) :
+        UseCaseIllegalStateException(
+            "Add Room Member Unauthorized - ChatRoomId: ${chatRoomId.value} - UserAccountId: ${userAccountId.value}"
+        )
+
+    class RemoveMemberUnauthorizedException(chatRoomId: ChatRoomId, userAccountId: UserAccountId) :
+        UseCaseIllegalStateException(
+            "Remove Room Member Unauthorized - ChatRoomId: ${chatRoomId.value} - UserAccountId: ${userAccountId.value}"
+        )
+
+    class ChangeMemberNameUnauthorizedException(chatRoomId: ChatRoomId, userAccountId: UserAccountId) :
+        UseCaseIllegalStateException(
+            "Change Member Name Unauthorized - ChatRoomId: ${chatRoomId.value} - UserAccountId: ${userAccountId.value}"
+        )
 }
