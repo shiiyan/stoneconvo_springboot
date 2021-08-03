@@ -26,6 +26,8 @@ class Message(
         )
     }
 
+    fun isSender(userAccountId: UserAccountId): Boolean = senderId == userAccountId
+
     fun updateContent(newMessageContent: MessageContent) {
         content = newMessageContent
     }

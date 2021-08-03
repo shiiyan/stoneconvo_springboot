@@ -18,7 +18,7 @@ class MessageApplicationService(
     private val messageRepository: MessageRepository
 ) {
     @Transactional
-    fun send(sendMessageCommand: SendMessageCommand) {
+    fun handleSend(sendMessageCommand: SendMessageCommand): String {
         val foundChatRoom = chatRoomRepository.findByRoomId(sendMessageCommand.roomId)
             ?: throw CustomException.ChatRoomNotFoundException(
                 chatRoomId = sendMessageCommand.roomId
@@ -38,14 +38,23 @@ class MessageApplicationService(
         )
 
         messageRepository.insert(newMessage)
+
+        return newMessage.id.value
     }
 
     @Transactional
-    fun edit(editMessageCommand: EditMessageCommand) {
+    fun handleEdit(editMessageCommand: EditMessageCommand) {
         val foundMessage = messageRepository.findByMessageId(editMessageCommand.messageId)
             ?: throw CustomException.MessageNotFoundException(
                 messageId = editMessageCommand.messageId
             )
+
+        if (!foundMessage.isSender(editMessageCommand.currentUserId)) {
+            throw CustomException.EditMessageUnauthorizedException(
+                messageId = editMessageCommand.messageId,
+                userAccountId = editMessageCommand.currentUserId
+            )
+        }
 
         foundMessage.updateContent(editMessageCommand.newContent)
 

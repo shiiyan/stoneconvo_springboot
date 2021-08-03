@@ -77,4 +77,9 @@ class CustomException {
         UseCaseIllegalStateException(
             "Change Member Name Unauthorized - ChatRoomId: ${chatRoomId.value} - UserAccountId: ${userAccountId.value}"
         )
+
+    class EditMessageUnauthorizedException(messageId: MessageId, userAccountId: UserAccountId) :
+        UseCaseIllegalStateException(
+            "Edit Message Unauthorized - MessageId: ${messageId.value} - UserAccountId: ${userAccountId.value}"
+        )
 }
