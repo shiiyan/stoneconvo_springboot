@@ -22,6 +22,10 @@ jobs:
           name: run migration
           command: ./gradlew flywayMigrate
       - run:
+          name: insert seeds data
+          command: |
+            mysql -h 127.0.0.1 -u root -proot --execute="USE stoneconvo_dev; INSERT INTO administration_authorities (user_account_id) VALUES ('4a4db863d6d4e3a5b045'); INSERT INTO user_accounts (user_account_id, account_name, password_hash, creator_id) VALUES ('4a4db863d6d4e3a5b045', 'admin', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', '4a4db863d6d4e3a5b045');"
+      - run:
           name: generate jooq
           command: ./gradlew generateJooq
       - run:
