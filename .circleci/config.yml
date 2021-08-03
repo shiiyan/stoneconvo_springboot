@@ -23,8 +23,8 @@ jobs:
           name: generate jooq
           command: ./gradlew generateJooq
       - run:
-          name: assemble
-          command: ./gradlew assemble
+          name: build
+          command: ./gradlew build
   deploy:
     docker:
       - image: circleci/openjdk:11.0.3-jdk-stretch
