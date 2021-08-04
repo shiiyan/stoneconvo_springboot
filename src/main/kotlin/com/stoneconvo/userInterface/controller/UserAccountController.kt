@@ -4,6 +4,7 @@ import com.stoneconvo.application.UserAccountApplicationService
 import com.stoneconvo.application.command.userAccount.ChangeAccountNameCommand
 import com.stoneconvo.application.command.userAccount.ChangePasswordCommand
 import com.stoneconvo.application.command.userAccount.CreateAccountCommand
+import com.stoneconvo.application.userAccount.CreateUserAccountApplicationService
 import com.stoneconvo.common.authorization.AuthorizationService
 import com.stoneconvo.userInterface.controller.requestBody.userAccount.ChangeAccountNameRequestBody
 import com.stoneconvo.userInterface.controller.requestBody.userAccount.ChangePasswordRequestBody
@@ -21,6 +22,8 @@ class UserAccountController(
     @Autowired
     private val userAccountApplicationService: UserAccountApplicationService,
     @Autowired
+    private val createUserAccountApplicationService: CreateUserAccountApplicationService,
+    @Autowired
     private val authorizationService: AuthorizationService
 ) {
     @PostMapping("/create")
@@ -33,7 +36,7 @@ class UserAccountController(
             password = createAccountRequestBody.password
         )
 
-        val accountId = userAccountApplicationService.handleCreate(command)
+        val accountId = createUserAccountApplicationService.handleCreate(command)
 
         return accountId
     }
