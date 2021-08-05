@@ -5,11 +5,11 @@ import com.stoneconvo.common.domain.UserAccountId
 import com.stoneconvo.domain.administrator.Administrator
 
 class UserAccount(
-    val id: UserAccountId,
+    override val id: UserAccountId,
     var name: UserAccountName,
     var passwordHash: PasswordHash,
     val creator: Administrator
-) : Entity() {
+) : Entity(id) {
     companion object {
         fun create(
             name: UserAccountName,

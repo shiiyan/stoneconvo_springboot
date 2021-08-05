@@ -1,3 +1,5 @@
 package com.stoneconvo.common.domain
 
-abstract class Entity
+abstract class Entity(
+    open val id: ValueObject
+)

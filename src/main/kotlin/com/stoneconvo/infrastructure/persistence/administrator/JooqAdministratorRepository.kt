@@ -1,4 +1,4 @@
-package com.stoneconvo.infrastructure.persistence
+package com.stoneconvo.infrastructure.persistence.administrator
 
 import com.stoneconvo.codegen.tables.daos.JAdministrationAuthoritiesDao
 import com.stoneconvo.common.domain.UserAccountId
@@ -6,9 +6,11 @@ import com.stoneconvo.domain.administrator.Administrator
 import com.stoneconvo.domain.administrator.AdministratorRepository
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Repository
 
 @Repository
+@Profile("default")
 class JooqAdministratorRepository(
     @Autowired
     private val dslContext: DSLContext

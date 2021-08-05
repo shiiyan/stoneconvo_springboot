@@ -6,12 +6,12 @@ import com.stoneconvo.domain.chatRoom.ChatRoomId
 import java.time.LocalDateTime
 
 class Message(
-    val id: MessageId,
+    override val id: MessageId,
     var content: MessageContent,
     val roomId: ChatRoomId,
     val senderId: UserAccountId,
     val sentDateTime: LocalDateTime,
-) : Entity() {
+) : Entity(id) {
     companion object {
         fun create(
             content: MessageContent,

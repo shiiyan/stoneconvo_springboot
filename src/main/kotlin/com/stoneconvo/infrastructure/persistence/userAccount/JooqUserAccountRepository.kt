@@ -1,4 +1,4 @@
-package com.stoneconvo.infrastructure.persistence
+package com.stoneconvo.infrastructure.persistence.userAccount
 
 import com.stoneconvo.codegen.tables.daos.JUserAccountsDao
 import com.stoneconvo.codegen.tables.pojos.JUserAccounts
@@ -10,9 +10,11 @@ import com.stoneconvo.domain.userAccount.UserAccountName
 import com.stoneconvo.domain.userAccount.UserAccountRepository
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Repository
 
 @Repository
+@Profile("default")
 class JooqUserAccountRepository(
     @Autowired
     private val dslContext: DSLContext

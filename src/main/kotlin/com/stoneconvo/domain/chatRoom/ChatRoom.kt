@@ -7,11 +7,11 @@ import com.stoneconvo.domain.administrator.Administrator
 import com.stoneconvo.domain.chatRoom.roomMember.RoomMember
 
 class ChatRoom(
-    val id: ChatRoomId,
+    override val id: ChatRoomId,
     var name: ChatRoomName,
     val owner: Administrator,
     val members: MutableList<RoomMember>,
-) : Entity() {
+) : Entity(id) {
     companion object {
         fun create(
             name: ChatRoomName,
