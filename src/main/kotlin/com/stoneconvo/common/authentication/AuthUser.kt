@@ -7,9 +7,9 @@ class AuthUser(
     @Column("user_account_id")
     val userAccountId: String,
     @Column("account_name")
-    private val accountName: String,
+    val accountName: String,
     @Column("password_hash")
-    private val passwordHash: String
+    val passwordHash: String
 ) {
     fun verify(
         userAccountName: String,

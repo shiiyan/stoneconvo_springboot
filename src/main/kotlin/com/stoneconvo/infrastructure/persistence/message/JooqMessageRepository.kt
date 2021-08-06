@@ -1,4 +1,4 @@
-package com.stoneconvo.infrastructure.persistence
+package com.stoneconvo.infrastructure.persistence.message
 
 import com.stoneconvo.codegen.tables.daos.JMessagesDao
 import com.stoneconvo.codegen.tables.pojos.JMessages
@@ -10,9 +10,11 @@ import com.stoneconvo.domain.message.MessageId
 import com.stoneconvo.domain.message.MessageRepository
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Repository
 
 @Repository
+@Profile("default")
 class JooqMessageRepository(
     @Autowired
     private val dslContext: DSLContext

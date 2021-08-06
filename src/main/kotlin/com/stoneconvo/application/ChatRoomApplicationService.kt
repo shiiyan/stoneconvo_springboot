@@ -36,7 +36,7 @@ class ChatRoomApplicationService(
             owner = administrator
         )
 
-        chatRoomRepository.save(newChatRoom)
+        chatRoomRepository.insert(newChatRoom)
 
         return newChatRoom.id.value
     }
@@ -53,7 +53,7 @@ class ChatRoomApplicationService(
             currentUserId = changeRoomNameCommand.currentUserId
         )
 
-        chatRoomRepository.save(foundChatRoom)
+        chatRoomRepository.update(foundChatRoom)
     }
 
     @Transactional
@@ -86,7 +86,7 @@ class ChatRoomApplicationService(
             )
         )
 
-        chatRoomRepository.save(foundChatRoom)
+        chatRoomRepository.update(foundChatRoom)
     }
 
     @Transactional
@@ -111,7 +111,7 @@ class ChatRoomApplicationService(
             }
         }
 
-        chatRoomRepository.save(foundChatRoom)
+        chatRoomRepository.update(foundChatRoom)
     }
 
     @Transactional
@@ -146,6 +146,6 @@ class ChatRoomApplicationService(
             }
         }
 
-        chatRoomRepository.save(foundChatRoom)
+        chatRoomRepository.update(foundChatRoom)
     }
 }
