@@ -44,7 +44,7 @@ class CreateUserAccountApplicationServiceTests(
     }
 
     @Test
-    fun `given normal condition when create user account then successful`() {
+    fun `given normal condition when create user account then succeed`() {
         /*
          * Before perform application service
          */
