@@ -20,4 +20,8 @@ class InMemoryAdministratorRepository : AdministratorRepository {
 
     override fun findByUserId(userId: UserAccountId): Administrator? =
         repository.findBy { it.id == userId }
+
+    fun insert(administrator: Administrator) {
+        repository.insert(administrator)
+    }
 }
