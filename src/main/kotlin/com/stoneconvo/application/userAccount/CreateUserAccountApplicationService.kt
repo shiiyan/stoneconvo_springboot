@@ -2,6 +2,7 @@ package com.stoneconvo.application.userAccount
 
 import com.stoneconvo.application.command.userAccount.CreateAccountCommand
 import com.stoneconvo.common.exception.CustomException
+import com.stoneconvo.domain.administrator.Administrator
 import com.stoneconvo.domain.administrator.AdministratorRepository
 import com.stoneconvo.domain.userAccount.UserAccount
 import com.stoneconvo.domain.userAccount.UserAccountDomainService
@@ -21,10 +22,12 @@ class CreateUserAccountApplicationService(
 ) {
     @Transactional
     fun handleCreate(createAccountCommand: CreateAccountCommand): String {
-        val administrator = administratorRepository.findByUserId(createAccountCommand.currentUserId)
-            ?: throw CustomException.AdministratorNotFoundException(
-                userId = createAccountCommand.currentUserId
-            )
+        val administrator = Administrator.fromDto(
+            administratorRepository.findByUserId(createAccountCommand.currentUserId)
+                ?: throw CustomException.AdministratorNotFoundException(
+                    userId = createAccountCommand.currentUserId
+                )
+        )
 
         userAccountDomainService.verifyAccountNotExistByName(createAccountCommand.name)
 

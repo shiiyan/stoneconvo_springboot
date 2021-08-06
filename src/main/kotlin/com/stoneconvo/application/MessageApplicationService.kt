@@ -3,6 +3,7 @@ package com.stoneconvo.application
 import com.stoneconvo.application.command.message.EditMessageCommand
 import com.stoneconvo.application.command.message.SendMessageCommand
 import com.stoneconvo.common.exception.CustomException
+import com.stoneconvo.domain.chatRoom.ChatRoom
 import com.stoneconvo.domain.chatRoom.ChatRoomRepository
 import com.stoneconvo.domain.message.Message
 import com.stoneconvo.domain.message.MessageRepository
@@ -19,10 +20,12 @@ class MessageApplicationService(
 ) {
     @Transactional
     fun handleSend(sendMessageCommand: SendMessageCommand): String {
-        val foundChatRoom = chatRoomRepository.findByRoomId(sendMessageCommand.roomId)
-            ?: throw CustomException.ChatRoomNotFoundException(
-                chatRoomId = sendMessageCommand.roomId
-            )
+        val foundChatRoom = ChatRoom.fromDto(
+            chatRoomRepository.findByRoomId(sendMessageCommand.roomId)
+                ?: throw CustomException.ChatRoomNotFoundException(
+                    chatRoomId = sendMessageCommand.roomId
+                )
+        )
 
         if (!foundChatRoom.isMemberExist(sendMessageCommand.currentUserId)) {
             throw CustomException.ChatRoomMemberNotExistException(
@@ -44,10 +47,12 @@ class MessageApplicationService(
 
     @Transactional
     fun handleEdit(editMessageCommand: EditMessageCommand) {
-        val foundMessage = messageRepository.findByMessageId(editMessageCommand.messageId)
-            ?: throw CustomException.MessageNotFoundException(
-                messageId = editMessageCommand.messageId
-            )
+        val foundMessage = Message.fromDto(
+            messageRepository.findByMessageId(editMessageCommand.messageId)
+                ?: throw CustomException.MessageNotFoundException(
+                    messageId = editMessageCommand.messageId
+                )
+        )
 
         if (!foundMessage.isSender(editMessageCommand.currentUserId)) {
             throw CustomException.EditMessageUnauthorizedException(

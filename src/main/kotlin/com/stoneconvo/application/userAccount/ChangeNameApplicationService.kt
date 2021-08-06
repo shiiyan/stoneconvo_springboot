@@ -2,6 +2,7 @@ package com.stoneconvo.application.userAccount
 
 import com.stoneconvo.application.command.userAccount.ChangeAccountNameCommand
 import com.stoneconvo.common.exception.CustomException
+import com.stoneconvo.domain.userAccount.UserAccount
 import com.stoneconvo.domain.userAccount.UserAccountDomainService
 import com.stoneconvo.domain.userAccount.UserAccountRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,11 +18,12 @@ class ChangeNameApplicationService(
 ) {
     @Transactional
     fun handleChangeName(changeAccountNameCommand: ChangeAccountNameCommand) {
-        val foundUserAccount =
+        val foundUserAccount = UserAccount.fromDto(
             userAccountRepository.findByUserId(changeAccountNameCommand.currentUserId)
                 ?: throw CustomException.UserAccountNotFoundException(
                     userId = changeAccountNameCommand.currentUserId.value
                 )
+        )
 
         userAccountDomainService.verifyAccountNotExistByName(changeAccountNameCommand.newName)
 

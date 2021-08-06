@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository
 @Repository
 @Profile("test")
 class InMemoryAdministratorRepository : AdministratorRepository {
-    private val repository: InMemoryBaseRepository<Administrator> = InMemoryBaseRepository()
+    private val repository: InMemoryBaseRepository<Administrator.Dto> = InMemoryBaseRepository()
 
     fun reset() {
         repository.reset()
@@ -18,10 +18,10 @@ class InMemoryAdministratorRepository : AdministratorRepository {
 
     fun count() = repository.count()
 
-    override fun findByUserId(userId: UserAccountId): Administrator? =
-        repository.findBy { it.id == userId }
+    override fun findByUserId(userId: UserAccountId): Administrator.Dto? =
+        repository.findBy { it.id == userId.value }
 
     fun insert(administrator: Administrator) {
-        repository.insert(administrator)
+        repository.insert(administrator.toDto())
     }
 }

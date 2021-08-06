@@ -11,7 +11,7 @@ class ChatRoom(
     var name: ChatRoomName,
     val owner: Administrator,
     val members: MutableList<RoomMember>,
-) : Entity(id) {
+) : Entity<ChatRoom.Dto>(id) {
     companion object {
         fun create(
             name: ChatRoomName,
@@ -21,6 +21,13 @@ class ChatRoom(
             name = name,
             owner = owner,
             members = mutableListOf(),
+        )
+
+        fun fromDto(dto: Dto) = ChatRoom(
+            id = ChatRoomId(dto.id),
+            name = ChatRoomName(dto.name),
+            owner = Administrator(UserAccountId(dto.ownerId)),
+            members = dto.members.map { RoomMember.fromDto(it) }.toMutableList()
         )
     }
 
@@ -81,4 +88,18 @@ class ChatRoom(
     }
 
     private fun isMemberFull(): Boolean = members.size > 30
+
+    override fun toDto(): Dto = Dto(
+        id = id.value,
+        name = name.value,
+        ownerId = owner.id.value,
+        members = members.map { it.toDto() }
+    )
+
+    data class Dto(
+        override val id: String,
+        val name: String,
+        val ownerId: String,
+        val members: List<RoomMember.Dto>
+    ) : Entity.Dto(id)
 }

@@ -1,10 +1,10 @@
 package com.stoneconvo.userInterface.controller
 
-import com.stoneconvo.application.UserAccountApplicationService
 import com.stoneconvo.application.command.userAccount.ChangeAccountNameCommand
 import com.stoneconvo.application.command.userAccount.ChangePasswordCommand
 import com.stoneconvo.application.command.userAccount.CreateAccountCommand
 import com.stoneconvo.application.userAccount.ChangeNameApplicationService
+import com.stoneconvo.application.userAccount.ChangePasswordApplicationService
 import com.stoneconvo.application.userAccount.CreateUserAccountApplicationService
 import com.stoneconvo.common.authorization.AuthorizationService
 import com.stoneconvo.userInterface.controller.requestBody.userAccount.ChangeAccountNameRequestBody
@@ -21,11 +21,11 @@ import javax.validation.Valid
 @RequestMapping("/user_account")
 class UserAccountController(
     @Autowired
-    private val userAccountApplicationService: UserAccountApplicationService,
-    @Autowired
     private val createUserAccountApplicationService: CreateUserAccountApplicationService,
     @Autowired
     private val changeNameApplicationService: ChangeNameApplicationService,
+    @Autowired
+    private val changePasswordApplicationService: ChangePasswordApplicationService,
     @Autowired
     private val authorizationService: AuthorizationService
 ) {
@@ -65,6 +65,6 @@ class UserAccountController(
             password = changePasswordRequestBody.password
         )
 
-        userAccountApplicationService.handleChangePassword(command)
+        changePasswordApplicationService.handleChangePassword(command)
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository
 @Repository
 @Profile("test")
 class InMemoryMessageRepository : MessageRepository {
-    private val repository: InMemoryBaseRepository<Message> = InMemoryBaseRepository()
+    private val repository: InMemoryBaseRepository<Message.Dto> = InMemoryBaseRepository()
 
     fun reset() {
         repository.reset()
@@ -18,14 +18,14 @@ class InMemoryMessageRepository : MessageRepository {
 
     fun count() = repository.count()
 
-    override fun findByMessageId(messageId: MessageId): Message? =
-        repository.findBy { it.id == messageId }
+    override fun findByMessageId(messageId: MessageId): Message.Dto? =
+        repository.findBy { it.id == messageId.value }
 
     override fun insert(message: Message) {
-        repository.insert(message)
+        repository.insert(message.toDto())
     }
 
     override fun update(message: Message) {
-        repository.update(message)
+        repository.update(message.toDto())
     }
 }

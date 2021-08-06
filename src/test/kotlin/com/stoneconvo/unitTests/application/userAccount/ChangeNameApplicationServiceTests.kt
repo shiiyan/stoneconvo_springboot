@@ -24,7 +24,6 @@ class ChangeNameApplicationServiceTests(
     private val userAccountRepository: InMemoryUserAccountRepository
 ) {
     private val defaultUserAccount = UserAccountFactory.createRandomly()
-    private val defaultName = defaultUserAccount.name
     private val defaultNewName = UserAccountFactory.makeUserAccountName(
         RandomStringGenerator.perform(length = 10)
     )
@@ -58,12 +57,11 @@ class ChangeNameApplicationServiceTests(
          */
         assertThat(userAccountRepository.count()).isEqualTo(1)
 
-        val foundUserAccount = userAccountRepository.findByUserId(defaultUserAccount.id)
-        assertThat(foundUserAccount?.name).isEqualTo(defaultNewName)
-        assertThat(foundUserAccount?.name).isNotEqualTo(defaultName)
-        assertThat(defaultNewName).isEqualTo(defaultUserAccount.name)
-        assertThat(foundUserAccount?.passwordHash).isEqualTo(defaultUserAccount.passwordHash)
-        assertThat(foundUserAccount?.creator?.id).isEqualTo(defaultUserAccount.creator.id)
+        val foundUserAccountDto = userAccountRepository.findByUserId(defaultUserAccount.id)
+        assertThat(foundUserAccountDto?.name).isEqualTo(defaultNewName.value)
+        assertThat(foundUserAccountDto?.name).isNotEqualTo(defaultUserAccount.name.value)
+        assertThat(foundUserAccountDto?.passwordHash).isEqualTo(defaultUserAccount.passwordHash.value)
+        assertThat(foundUserAccountDto?.creatorId).isEqualTo(defaultUserAccount.creator.id.value)
     }
 
     @Test
@@ -90,11 +88,11 @@ class ChangeNameApplicationServiceTests(
          */
         assertThat(userAccountRepository.count()).isEqualTo(1)
 
-        val foundUserAccount = userAccountRepository.findByUserId(defaultUserAccount.id)
-        assertThat(foundUserAccount?.name).isNotEqualTo(defaultNewName)
-        assertThat(foundUserAccount?.name).isEqualTo(defaultName)
-        assertThat(foundUserAccount?.passwordHash).isEqualTo(defaultUserAccount.passwordHash)
-        assertThat(foundUserAccount?.creator?.id).isEqualTo(defaultUserAccount.creator.id)
+        val foundUserAccountDto = userAccountRepository.findByUserId(defaultUserAccount.id)
+        assertThat(foundUserAccountDto?.name).isNotEqualTo(defaultNewName.value)
+        assertThat(foundUserAccountDto?.name).isEqualTo(defaultUserAccount.name.value)
+        assertThat(foundUserAccountDto?.passwordHash).isEqualTo(defaultUserAccount.passwordHash.value)
+        assertThat(foundUserAccountDto?.creatorId).isEqualTo(defaultUserAccount.creator.id.value)
     }
 
     @Test
@@ -121,10 +119,10 @@ class ChangeNameApplicationServiceTests(
          */
         assertThat(userAccountRepository.count()).isEqualTo(1)
 
-        val foundUserAccount = userAccountRepository.findByUserId(defaultUserAccount.id)
-        assertThat(foundUserAccount?.name).isNotEqualTo(defaultNewName)
-        assertThat(foundUserAccount?.name).isEqualTo(defaultName)
-        assertThat(foundUserAccount?.passwordHash).isEqualTo(defaultUserAccount.passwordHash)
-        assertThat(foundUserAccount?.creator?.id).isEqualTo(defaultUserAccount.creator.id)
+        val foundUserAccountDto = userAccountRepository.findByUserId(defaultUserAccount.id)
+        assertThat(foundUserAccountDto?.name).isNotEqualTo(defaultNewName.value)
+        assertThat(foundUserAccountDto?.name).isEqualTo(defaultUserAccount.name.value)
+        assertThat(foundUserAccountDto?.passwordHash).isEqualTo(defaultUserAccount.passwordHash.value)
+        assertThat(foundUserAccountDto?.creatorId).isEqualTo(defaultUserAccount.creator.id.value)
     }
 }

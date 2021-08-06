@@ -17,10 +17,10 @@ class JooqAdministratorRepository(
 ) : AdministratorRepository {
     private val dao = JAdministrationAuthoritiesDao(dslContext.configuration())
 
-    override fun findByUserId(userId: UserAccountId): Administrator? =
+    override fun findByUserId(userId: UserAccountId): Administrator.Dto? =
         dao.fetchOneByJUserAccountId(userId.value)?.let {
             Administrator(
                 UserAccountId(it.userAccountId)
-            )
+            ).toDto()
         }
 }

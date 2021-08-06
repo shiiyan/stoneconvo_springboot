@@ -21,24 +21,24 @@ class JooqUserAccountRepository(
 ) : UserAccountRepository {
     private val dao = JUserAccountsDao(dslContext.configuration())
 
-    override fun findByUserId(userId: UserAccountId): UserAccount? =
+    override fun findByUserId(userId: UserAccountId): UserAccount.Dto? =
         dao.fetchOneByJUserAccountId(userId.value)?.let {
             UserAccount(
                 id = UserAccountId(it.userAccountId),
                 name = UserAccountName(it.accountName),
                 passwordHash = PasswordHash(it.passwordHash),
                 creator = Administrator(UserAccountId(it.creatorId))
-            )
+            ).toDto()
         }
 
-    override fun findByUserName(userName: UserAccountName): UserAccount? =
+    override fun findByUserName(userName: UserAccountName): UserAccount.Dto? =
         dao.fetchOneByJAccountName(userName.value)?.let {
             UserAccount(
                 id = UserAccountId(it.userAccountId),
                 name = UserAccountName(it.accountName),
                 passwordHash = PasswordHash(it.passwordHash),
                 creator = Administrator(UserAccountId(it.creatorId))
-            )
+            ).toDto()
         }
 
     override fun insert(userAccount: UserAccount) {

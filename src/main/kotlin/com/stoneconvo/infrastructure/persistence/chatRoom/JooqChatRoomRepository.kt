@@ -26,14 +26,14 @@ class JooqChatRoomRepository(
     private val chatRoomDao = JChatRoomsDao(dslContext.configuration())
     private val roomMembersDao = JRoomMembersDao(dslContext.configuration())
 
-    override fun findByRoomId(roomId: ChatRoomId): ChatRoom? =
+    override fun findByRoomId(roomId: ChatRoomId): ChatRoom.Dto? =
         chatRoomDao.fetchOneByJRoomId(roomId.value)?.let {
             ChatRoom(
                 id = ChatRoomId(it.roomId),
                 name = ChatRoomName(it.roomName),
                 owner = Administrator(UserAccountId(it.roomOwnerId)),
                 members = fetchRoomMembersByRoomId(roomId)
-            )
+            ).toDto()
         }
 
     override fun insert(chatRoom: ChatRoom) {

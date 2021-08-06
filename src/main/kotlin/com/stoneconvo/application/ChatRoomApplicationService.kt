@@ -6,6 +6,7 @@ import com.stoneconvo.application.command.chatRoom.ChangeRoomNameCommand
 import com.stoneconvo.application.command.chatRoom.CreateRoomCommand
 import com.stoneconvo.application.command.chatRoom.RemoveMemberCommand
 import com.stoneconvo.common.exception.CustomException
+import com.stoneconvo.domain.administrator.Administrator
 import com.stoneconvo.domain.administrator.AdministratorRepository
 import com.stoneconvo.domain.chatRoom.ChatRoom
 import com.stoneconvo.domain.chatRoom.ChatRoomRepository
@@ -26,10 +27,12 @@ class ChatRoomApplicationService(
 ) {
     @Transactional
     fun handleCreate(createRoomCommand: CreateRoomCommand): String {
-        val administrator = administratorRepository.findByUserId(createRoomCommand.currentUserId)
-            ?: throw CustomException.AdministratorNotFoundException(
-                userId = createRoomCommand.currentUserId
-            )
+        val administrator = Administrator.fromDto(
+            administratorRepository.findByUserId(createRoomCommand.currentUserId)
+                ?: throw CustomException.AdministratorNotFoundException(
+                    userId = createRoomCommand.currentUserId
+                )
+        )
 
         val newChatRoom = ChatRoom.create(
             name = createRoomCommand.name,
@@ -43,10 +46,12 @@ class ChatRoomApplicationService(
 
     @Transactional
     fun handleChangeName(changeRoomNameCommand: ChangeRoomNameCommand) {
-        val foundChatRoom = chatRoomRepository.findByRoomId(changeRoomNameCommand.chatRoomId)
-            ?: throw CustomException.ChatRoomNotFoundException(
-                chatRoomId = changeRoomNameCommand.chatRoomId
-            )
+        val foundChatRoom = ChatRoom.fromDto(
+            chatRoomRepository.findByRoomId(changeRoomNameCommand.chatRoomId)
+                ?: throw CustomException.ChatRoomNotFoundException(
+                    chatRoomId = changeRoomNameCommand.chatRoomId
+                )
+        )
 
         foundChatRoom.changeName(
             newName = changeRoomNameCommand.newName,
@@ -58,10 +63,12 @@ class ChatRoomApplicationService(
 
     @Transactional
     fun handleAddMember(addMemberCommand: AddMemberCommand) {
-        val foundChatRoom = chatRoomRepository.findByRoomId(addMemberCommand.chatRoomId)
-            ?: throw CustomException.ChatRoomNotFoundException(
-                chatRoomId = addMemberCommand.chatRoomId
-            )
+        val foundChatRoom = ChatRoom.fromDto(
+            chatRoomRepository.findByRoomId(addMemberCommand.chatRoomId)
+                ?: throw CustomException.ChatRoomNotFoundException(
+                    chatRoomId = addMemberCommand.chatRoomId
+                )
+        )
 
         if (
             !foundChatRoom.isMemberExist(addMemberCommand.currentUserId) &&
@@ -91,10 +98,12 @@ class ChatRoomApplicationService(
 
     @Transactional
     fun handleRemoveMember(removeMemberCommand: RemoveMemberCommand) {
-        val foundChatRoom = chatRoomRepository.findByRoomId(removeMemberCommand.chatRoomId)
-            ?: throw CustomException.ChatRoomNotFoundException(
-                chatRoomId = removeMemberCommand.chatRoomId
-            )
+        val foundChatRoom = ChatRoom.fromDto(
+            chatRoomRepository.findByRoomId(removeMemberCommand.chatRoomId)
+                ?: throw CustomException.ChatRoomNotFoundException(
+                    chatRoomId = removeMemberCommand.chatRoomId
+                )
+        )
 
         when {
             foundChatRoom.isOwner(removeMemberCommand.currentUserId) -> {
@@ -116,10 +125,12 @@ class ChatRoomApplicationService(
 
     @Transactional
     fun handleChangeMemberName(changeMemberNameCommand: ChangeMemberNameCommand) {
-        val foundChatRoom = chatRoomRepository.findByRoomId(changeMemberNameCommand.chatRoomId)
-            ?: throw CustomException.ChatRoomNotFoundException(
-                chatRoomId = changeMemberNameCommand.chatRoomId
-            )
+        val foundChatRoom = ChatRoom.fromDto(
+            chatRoomRepository.findByRoomId(changeMemberNameCommand.chatRoomId)
+                ?: throw CustomException.ChatRoomNotFoundException(
+                    chatRoomId = changeMemberNameCommand.chatRoomId
+                )
+        )
 
         when {
             foundChatRoom.isOwner(changeMemberNameCommand.currentUserId) -> {

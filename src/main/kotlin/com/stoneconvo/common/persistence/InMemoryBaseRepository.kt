@@ -2,23 +2,23 @@ package com.stoneconvo.common.persistence
 
 import com.stoneconvo.common.domain.Entity
 
-class InMemoryBaseRepository<T : Entity> {
-    private val entities: MutableList<T> = mutableListOf()
+class InMemoryBaseRepository<T : Entity.Dto> {
+    private val entityDtos: MutableList<T> = mutableListOf()
 
     fun reset() {
-        entities.clear()
+        entityDtos.clear()
     }
 
-    fun count(): Int = entities.size
+    fun count(): Int = entityDtos.size
 
-    fun findBy(predicate: (T) -> Boolean): T? = entities.find(predicate = predicate)
+    fun findBy(predicate: (T) -> Boolean): T? = entityDtos.find(predicate = predicate)
 
     fun insert(entity: T) {
-        entities.add(entity)
+        entityDtos.add(entity)
     }
 
     fun update(entity: T) {
-        entities.replaceAll {
+        entityDtos.replaceAll {
             if (it.id == entity.id) entity
             else it
         }

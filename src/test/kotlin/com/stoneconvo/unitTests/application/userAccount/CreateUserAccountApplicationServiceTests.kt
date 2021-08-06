@@ -66,10 +66,10 @@ class CreateUserAccountApplicationServiceTests(
          */
         assertThat(userAccountRepository.count()).isEqualTo(1)
 
-        val foundUserAccount = userAccountRepository.findByUserId(UserAccountId(userAccountId))
-        assertThat(foundUserAccount?.name).isEqualTo(defaultUserName)
-        assertThat(foundUserAccount?.passwordHash).isEqualTo(defaultPasswordHash)
-        assertThat(foundUserAccount?.creator?.id).isEqualTo(defaultAdministrator.id)
+        val foundUserAccountDto = userAccountRepository.findByUserId(UserAccountId(userAccountId))
+        assertThat(foundUserAccountDto?.name).isEqualTo(defaultUserName.value)
+        assertThat(foundUserAccountDto?.passwordHash).isEqualTo(defaultPasswordHash.value)
+        assertThat(foundUserAccountDto?.creatorId).isEqualTo(defaultAdministrator.id.value)
     }
 
     @Test

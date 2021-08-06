@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository
 @Repository
 @Profile("test")
 class InMemoryUserAccountRepository : UserAccountRepository {
-    private val repository: InMemoryBaseRepository<UserAccount> = InMemoryBaseRepository()
+    private val repository: InMemoryBaseRepository<UserAccount.Dto> = InMemoryBaseRepository()
 
     fun reset() {
         repository.reset()
@@ -19,17 +19,17 @@ class InMemoryUserAccountRepository : UserAccountRepository {
 
     fun count() = repository.count()
 
-    override fun findByUserId(userId: UserAccountId): UserAccount? =
-        repository.findBy { it.id == userId }
+    override fun findByUserId(userId: UserAccountId): UserAccount.Dto? =
+        repository.findBy { it.id == userId.value }
 
-    override fun findByUserName(userName: UserAccountName): UserAccount? =
-        repository.findBy { it.name == userName }
+    override fun findByUserName(userName: UserAccountName): UserAccount.Dto? =
+        repository.findBy { it.name == userName.value }
 
     override fun insert(userAccount: UserAccount) {
-        repository.insert(userAccount)
+        repository.insert(userAccount.toDto())
     }
 
     override fun update(userAccount: UserAccount) {
-        repository.update(userAccount)
+        repository.update(userAccount.toDto())
     }
 }

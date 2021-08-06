@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository
 @Repository
 @Profile("test")
 class InMemoryChatRoomRepository : ChatRoomRepository {
-    private val repository: InMemoryBaseRepository<ChatRoom> = InMemoryBaseRepository()
+    private val repository: InMemoryBaseRepository<ChatRoom.Dto> = InMemoryBaseRepository()
 
     fun reset() {
         repository.reset()
@@ -18,14 +18,14 @@ class InMemoryChatRoomRepository : ChatRoomRepository {
 
     fun count() = repository.count()
 
-    override fun findByRoomId(roomId: ChatRoomId): ChatRoom? =
-        repository.findBy { it.id == roomId }
+    override fun findByRoomId(roomId: ChatRoomId): ChatRoom.Dto? =
+        repository.findBy { it.id == roomId.value }
 
     override fun insert(chatRoom: ChatRoom) {
-        repository.insert(chatRoom)
+        repository.insert(chatRoom.toDto())
     }
 
     override fun update(chatRoom: ChatRoom) {
-        repository.update(chatRoom)
+        repository.update(chatRoom.toDto())
     }
 }

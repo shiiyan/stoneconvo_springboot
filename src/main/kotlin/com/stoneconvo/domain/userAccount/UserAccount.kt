@@ -9,7 +9,7 @@ class UserAccount(
     var name: UserAccountName,
     var passwordHash: PasswordHash,
     val creator: Administrator
-) : Entity(id) {
+) : Entity<UserAccount.Dto>(id) {
     companion object {
         fun create(
             name: UserAccountName,
@@ -21,6 +21,13 @@ class UserAccount(
             passwordHash = passwordHash,
             creator = creator
         )
+
+        fun fromDto(dto: Dto) = UserAccount(
+            id = UserAccountId(dto.id),
+            name = UserAccountName(dto.name),
+            passwordHash = PasswordHash(dto.passwordHash),
+            creator = Administrator(UserAccountId(dto.creatorId))
+        )
     }
 
     fun changeName(newName: UserAccountName) {
@@ -30,4 +37,18 @@ class UserAccount(
     fun changePassword(newPasswordHash: PasswordHash) {
         passwordHash = newPasswordHash
     }
+
+    override fun toDto(): Dto = Dto(
+        id = id.value,
+        name = name.value,
+        passwordHash = passwordHash.value,
+        creatorId = creator.id.value
+    )
+
+    data class Dto(
+        override val id: String,
+        val name: String,
+        val passwordHash: String,
+        val creatorId: String
+    ) : Entity.Dto(id)
 }

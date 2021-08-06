@@ -21,7 +21,7 @@ class JooqMessageRepository(
 ) : MessageRepository {
     private val messageDao = JMessagesDao(dslContext.configuration())
 
-    override fun findByMessageId(messageId: MessageId): Message? =
+    override fun findByMessageId(messageId: MessageId): Message.Dto? =
         messageDao.fetchOneByJMessageId(messageId.value)?.let {
             Message(
                 id = MessageId(it.messageId),
@@ -29,7 +29,7 @@ class JooqMessageRepository(
                 roomId = ChatRoomId(it.roomId),
                 senderId = UserAccountId(it.senderId),
                 sentDateTime = it.sentDateTime
-            )
+            ).toDto()
         }
 
     override fun insert(message: Message) {
