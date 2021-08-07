@@ -1,8 +1,9 @@
 package com.stoneconvo.userInterface.controller
 
-import com.stoneconvo.application.MessageApplicationService
-import com.stoneconvo.application.command.message.EditMessageCommand
-import com.stoneconvo.application.command.message.SendMessageCommand
+import com.stoneconvo.application.message.EditMessageApplicationService
+import com.stoneconvo.application.message.SendMessageApplicationService
+import com.stoneconvo.application.message.command.EditMessageCommand
+import com.stoneconvo.application.message.command.SendMessageCommand
 import com.stoneconvo.common.authorization.AuthorizationService
 import com.stoneconvo.userInterface.controller.requestBody.message.EditMessageRequestBody
 import com.stoneconvo.userInterface.controller.requestBody.message.SendMessageRequestBody
@@ -17,7 +18,9 @@ import javax.validation.Valid
 @RequestMapping("/message")
 class MessageController(
     @Autowired
-    private val messageApplicationService: MessageApplicationService,
+    private val sendMessageApplicationService: SendMessageApplicationService,
+    @Autowired
+    private val editMessageApplicationService: EditMessageApplicationService,
     @Autowired
     private val authorizationService: AuthorizationService
 ) {
@@ -31,7 +34,7 @@ class MessageController(
             currentUserId = authorizationService.getCurrentUserId()
         )
 
-        val messageId = messageApplicationService.handleSend(command)
+        val messageId = sendMessageApplicationService.handleSend(command)
 
         return messageId
     }
@@ -46,6 +49,6 @@ class MessageController(
             currentUserId = authorizationService.getCurrentUserId()
         )
 
-        messageApplicationService.handleEdit(command)
+        editMessageApplicationService.handleEdit(command)
     }
 }

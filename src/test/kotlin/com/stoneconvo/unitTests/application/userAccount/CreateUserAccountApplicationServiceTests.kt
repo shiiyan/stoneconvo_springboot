@@ -1,7 +1,7 @@
 package com.stoneconvo.unitTests.application.userAccount
 
-import com.stoneconvo.application.command.userAccount.CreateAccountCommand
 import com.stoneconvo.application.userAccount.CreateUserAccountApplicationService
+import com.stoneconvo.application.userAccount.command.CreateAccountCommand
 import com.stoneconvo.common.domain.UserAccountId
 import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.common.helper.Helper

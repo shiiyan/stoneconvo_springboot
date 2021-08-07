@@ -1,11 +1,11 @@
 package com.stoneconvo.userInterface.controller
 
-import com.stoneconvo.application.command.userAccount.ChangeAccountNameCommand
-import com.stoneconvo.application.command.userAccount.ChangePasswordCommand
-import com.stoneconvo.application.command.userAccount.CreateAccountCommand
 import com.stoneconvo.application.userAccount.ChangeNameApplicationService
 import com.stoneconvo.application.userAccount.ChangePasswordApplicationService
 import com.stoneconvo.application.userAccount.CreateUserAccountApplicationService
+import com.stoneconvo.application.userAccount.command.ChangeAccountNameCommand
+import com.stoneconvo.application.userAccount.command.ChangePasswordCommand
+import com.stoneconvo.application.userAccount.command.CreateAccountCommand
 import com.stoneconvo.common.authorization.AuthorizationService
 import com.stoneconvo.userInterface.controller.requestBody.userAccount.ChangeAccountNameRequestBody
 import com.stoneconvo.userInterface.controller.requestBody.userAccount.ChangePasswordRequestBody

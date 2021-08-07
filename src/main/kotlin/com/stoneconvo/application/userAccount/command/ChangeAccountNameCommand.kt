@@ -1,4 +1,4 @@
-package com.stoneconvo.application.command.userAccount
+package com.stoneconvo.application.userAccount.command
 
 import com.stoneconvo.common.domain.UserAccountId
 import com.stoneconvo.domain.userAccount.UserAccountName

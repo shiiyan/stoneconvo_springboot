@@ -1,6 +1,6 @@
 package com.stoneconvo.application.userAccount
 
-import com.stoneconvo.application.command.userAccount.ChangePasswordCommand
+import com.stoneconvo.application.userAccount.command.ChangePasswordCommand
 import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.domain.userAccount.UserAccount
 import com.stoneconvo.domain.userAccount.UserAccountRepository

@@ -1,7 +1,7 @@
 package com.stoneconvo.unitTests.application.userAccount
 
-import com.stoneconvo.application.command.userAccount.ChangeAccountNameCommand
 import com.stoneconvo.application.userAccount.ChangeNameApplicationService
+import com.stoneconvo.application.userAccount.command.ChangeAccountNameCommand
 import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.common.helper.Helper
 import com.stoneconvo.infrastructure.persistence.userAccount.InMemoryUserAccountRepository

@@ -1,4 +1,4 @@
-package com.stoneconvo.application.command.message
+package com.stoneconvo.application.message.command
 
 import com.stoneconvo.common.domain.UserAccountId
 import com.stoneconvo.domain.message.MessageContent

@@ -1,7 +1,7 @@
 package com.stoneconvo.unitTests.application.userAccount
 
-import com.stoneconvo.application.command.userAccount.ChangePasswordCommand
 import com.stoneconvo.application.userAccount.ChangePasswordApplicationService
+import com.stoneconvo.application.userAccount.command.ChangePasswordCommand
 import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.common.helper.Helper
 import com.stoneconvo.infrastructure.persistence.userAccount.InMemoryUserAccountRepository

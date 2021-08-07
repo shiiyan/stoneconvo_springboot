@@ -1,0 +1,3 @@
+package com.stoneconvo.unitTests.application.message
+
+class EditMessageApplicationServiceTests

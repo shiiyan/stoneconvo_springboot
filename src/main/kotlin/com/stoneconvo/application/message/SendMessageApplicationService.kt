@@ -1,7 +1,6 @@
-package com.stoneconvo.application
+package com.stoneconvo.application.message
 
-import com.stoneconvo.application.command.message.EditMessageCommand
-import com.stoneconvo.application.command.message.SendMessageCommand
+import com.stoneconvo.application.message.command.SendMessageCommand
 import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.domain.chatRoom.ChatRoom
 import com.stoneconvo.domain.chatRoom.ChatRoomRepository
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class MessageApplicationService(
+class SendMessageApplicationService(
     @Autowired
     private val chatRoomRepository: ChatRoomRepository,
     @Autowired
@@ -43,26 +42,5 @@ class MessageApplicationService(
         messageRepository.insert(newMessage)
 
         return newMessage.id.value
-    }
-
-    @Transactional
-    fun handleEdit(editMessageCommand: EditMessageCommand) {
-        val foundMessage = Message.fromDto(
-            messageRepository.findByMessageId(editMessageCommand.messageId)
-                ?: throw CustomException.MessageNotFoundException(
-                    messageId = editMessageCommand.messageId
-                )
-        )
-
-        if (!foundMessage.isSender(editMessageCommand.currentUserId)) {
-            throw CustomException.EditMessageUnauthorizedException(
-                messageId = editMessageCommand.messageId,
-                userAccountId = editMessageCommand.currentUserId
-            )
-        }
-
-        foundMessage.updateContent(editMessageCommand.newContent)
-
-        messageRepository.update(foundMessage)
     }
 }

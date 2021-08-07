@@ -1,6 +1,6 @@
 package com.stoneconvo.application.userAccount
 
-import com.stoneconvo.application.command.userAccount.CreateAccountCommand
+import com.stoneconvo.application.userAccount.command.CreateAccountCommand
 import com.stoneconvo.common.exception.CustomException
 import com.stoneconvo.domain.administrator.Administrator
 import com.stoneconvo.domain.administrator.AdministratorRepository
