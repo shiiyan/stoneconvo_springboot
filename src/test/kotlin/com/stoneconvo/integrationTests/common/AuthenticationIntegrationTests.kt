@@ -18,7 +18,7 @@ class AuthenticationIntegrationTests {
     private val restTemplate: TestRestTemplate = TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES)
 
     @Test
-    fun `login and logout successful`() {
+    fun `given normal condition when login and logout then succeed`() {
         val loginHeaders = HttpHeaders()
         loginHeaders.contentType = MediaType.APPLICATION_JSON
         val loginUserAccount = JSONObject(
