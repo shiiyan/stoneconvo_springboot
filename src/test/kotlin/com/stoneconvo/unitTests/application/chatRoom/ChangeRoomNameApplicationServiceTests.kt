@@ -59,7 +59,7 @@ class ChangeRoomNameApplicationServiceTests(
             chatRoomId = defaultChatRoom.id.value
         )
 
-        val roomId = changeRoomNameApplicationService.handleChangeName(command)
+        changeRoomNameApplicationService.handleChangeName(command)
 
         /*
          * After perform application service
@@ -99,7 +99,7 @@ class ChangeRoomNameApplicationServiceTests(
             chatRoomId = defaultChatRoom.id.value
         )
 
-        val roomId = changeRoomNameApplicationService.handleChangeName(command)
+        changeRoomNameApplicationService.handleChangeName(command)
 
         /*
          * After perform application service
