@@ -47,8 +47,6 @@ class ChatRoom(
     fun isMemberExist(userAccountId: UserAccountId): Boolean = members
         .map { it.userAccountId }.contains(userAccountId)
 
-    fun isOwner(userAccountId: UserAccountId): Boolean = owner == Administrator(userAccountId)
-
     fun addMember(newMember: RoomMember) {
         if (isMemberFull()) {
             throw CustomException.ChatRoomMemberFullException(id)
@@ -114,6 +112,8 @@ class ChatRoom(
         else isMemberExist(currentUserId) && currentUserId == memberIdToEdit
 
     private fun isMemberFull(): Boolean = members.size >= MEMBERS_LIMIT
+
+    private fun isOwner(userAccountId: UserAccountId): Boolean = owner == Administrator(userAccountId)
 
     override fun toDto(): Dto = Dto(
         id = id.value,
