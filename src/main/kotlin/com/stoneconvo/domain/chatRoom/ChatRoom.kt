@@ -29,6 +29,8 @@ class ChatRoom(
             owner = Administrator(UserAccountId(dto.ownerId)),
             members = dto.members.map { RoomMember.fromDto(it) }.toMutableList()
         )
+
+        const val MEMBERS_LIMIT = 30
     }
 
     fun changeName(newName: ChatRoomName, currentUserId: UserAccountId) {
@@ -102,19 +104,11 @@ class ChatRoom(
     fun verifyAuthorityToEditMember(
         memberIdToEdit: UserAccountId,
         currentUserId: UserAccountId
-    ): Boolean {
-        if (!isOwner(currentUserId) && !isMemberExist(currentUserId)) {
-            return false
-        }
+    ): Boolean =
+        if (isOwner(currentUserId)) true
+        else isMemberExist(currentUserId) && currentUserId == memberIdToEdit
 
-        if (!isOwner(currentUserId) && isMemberExist(currentUserId) && (currentUserId != memberIdToEdit)) {
-            return false
-        }
-
-        return true
-    }
-
-    private fun isMemberFull(): Boolean = members.size > 30
+    private fun isMemberFull(): Boolean = members.size >= MEMBERS_LIMIT
 
     override fun toDto(): Dto = Dto(
         id = id.value,
