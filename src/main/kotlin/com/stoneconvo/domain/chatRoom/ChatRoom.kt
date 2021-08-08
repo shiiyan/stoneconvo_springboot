@@ -101,6 +101,11 @@ class ChatRoom(
         }
     }
 
+    /*
+     * if current user is the room owner, he can edit all room members.
+     * if current user is a room member, he can only edit himself.
+     * if current user doesn't belong to room, he can't edit any room member.
+     */
     fun verifyAuthorityToEditMember(
         memberIdToEdit: UserAccountId,
         currentUserId: UserAccountId
