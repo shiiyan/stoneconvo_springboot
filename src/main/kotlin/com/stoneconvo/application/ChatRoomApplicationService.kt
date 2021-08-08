@@ -70,15 +70,7 @@ class ChatRoomApplicationService(
                 )
         )
 
-        if (
-            !foundChatRoom.isMemberExist(addMemberCommand.currentUserId) &&
-            !foundChatRoom.isOwner(addMemberCommand.currentUserId)
-        ) {
-            throw CustomException.AddRoomMemberUnauthorizedException(
-                userAccountId = addMemberCommand.currentUserId,
-                chatRoomId = addMemberCommand.chatRoomId
-            )
-        }
+        foundChatRoom.verifyAuthorityToAddMember(currentUserId = addMemberCommand.currentUserId)
 
         if (userAccountRepository.findByUserId(addMemberCommand.userAccountId) == null) {
             throw CustomException.UserAccountNotFoundException(

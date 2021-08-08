@@ -87,6 +87,18 @@ class ChatRoom(
         }
     }
 
+    fun verifyAuthorityToAddMember(currentUserId: UserAccountId) {
+        if (
+            !isMemberExist(currentUserId) &&
+            !isOwner(currentUserId)
+        ) {
+            throw CustomException.AddRoomMemberUnauthorizedException(
+                userAccountId = currentUserId,
+                chatRoomId = id
+            )
+        }
+    }
+
     private fun isMemberFull(): Boolean = members.size > 30
 
     override fun toDto(): Dto = Dto(
