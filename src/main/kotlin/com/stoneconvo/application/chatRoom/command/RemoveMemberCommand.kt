@@ -1,24 +1,20 @@
-package com.stoneconvo.application.command.chatRoom
+package com.stoneconvo.application.chatRoom.command
 
 import com.stoneconvo.common.domain.UserAccountId
 import com.stoneconvo.domain.chatRoom.ChatRoomId
-import com.stoneconvo.domain.chatRoom.roomMember.RoomMemberName
 
-data class ChangeMemberNameCommand(
+data class RemoveMemberCommand(
     val chatRoomId: ChatRoomId,
-    val newName: RoomMemberName,
     val userAccountId: UserAccountId,
     val currentUserId: UserAccountId
 ) {
     companion object {
         fun create(
             chatRoomId: String,
-            name: String,
             userAccountId: String,
             currentUserId: String
-        ) = ChangeMemberNameCommand(
+        ) = RemoveMemberCommand(
             chatRoomId = ChatRoomId(chatRoomId),
-            newName = RoomMemberName(name),
             userAccountId = UserAccountId(userAccountId),
             currentUserId = UserAccountId(currentUserId)
         )

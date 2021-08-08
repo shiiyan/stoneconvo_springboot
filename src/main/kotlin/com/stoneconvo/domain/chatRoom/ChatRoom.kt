@@ -99,6 +99,21 @@ class ChatRoom(
         }
     }
 
+    fun verifyAuthorityToEditMember(
+        memberIdToEdit: UserAccountId,
+        currentUserId: UserAccountId
+    ): Boolean {
+        if (!isOwner(currentUserId) && !isMemberExist(currentUserId)) {
+            return false
+        }
+
+        if (!isOwner(currentUserId) && isMemberExist(currentUserId) && (currentUserId != memberIdToEdit)) {
+            return false
+        }
+
+        return true
+    }
+
     private fun isMemberFull(): Boolean = members.size > 30
 
     override fun toDto(): Dto = Dto(

@@ -1,11 +1,15 @@
 package com.stoneconvo.userInterface.controller
 
-import com.stoneconvo.application.ChatRoomApplicationService
-import com.stoneconvo.application.command.chatRoom.AddMemberCommand
-import com.stoneconvo.application.command.chatRoom.ChangeMemberNameCommand
-import com.stoneconvo.application.command.chatRoom.ChangeRoomNameCommand
-import com.stoneconvo.application.command.chatRoom.CreateRoomCommand
-import com.stoneconvo.application.command.chatRoom.RemoveMemberCommand
+import com.stoneconvo.application.chatRoom.AddMemberApplicationService
+import com.stoneconvo.application.chatRoom.ChangeMemberNameApplicationService
+import com.stoneconvo.application.chatRoom.ChangeRoomNameApplicationService
+import com.stoneconvo.application.chatRoom.CreateRoomApplicationService
+import com.stoneconvo.application.chatRoom.RemoveMemberApplicationService
+import com.stoneconvo.application.chatRoom.command.AddMemberCommand
+import com.stoneconvo.application.chatRoom.command.ChangeMemberNameCommand
+import com.stoneconvo.application.chatRoom.command.ChangeRoomNameCommand
+import com.stoneconvo.application.chatRoom.command.CreateRoomCommand
+import com.stoneconvo.application.chatRoom.command.RemoveMemberCommand
 import com.stoneconvo.common.authorization.AuthorizationService
 import com.stoneconvo.userInterface.controller.requestBody.chatRoom.AddMemberRequestBody
 import com.stoneconvo.userInterface.controller.requestBody.chatRoom.ChangeMemberNameRequestBody
@@ -23,7 +27,15 @@ import javax.validation.Valid
 @RequestMapping("/chat_room")
 class ChatRoomController(
     @Autowired
-    private val chatRoomApplicationService: ChatRoomApplicationService,
+    private val createRoomApplicationService: CreateRoomApplicationService,
+    @Autowired
+    private val changeRoomNameApplicationService: ChangeRoomNameApplicationService,
+    @Autowired
+    private val addMemberApplicationService: AddMemberApplicationService,
+    @Autowired
+    private val removeMemberApplicationService: RemoveMemberApplicationService,
+    @Autowired
+    private val changeMemberNameApplicationService: ChangeMemberNameApplicationService,
     @Autowired
     private val authorizationService: AuthorizationService
 ) {
@@ -36,7 +48,7 @@ class ChatRoomController(
             name = createRoomRequestBody.name
         )
 
-        val roomId = chatRoomApplicationService.handleCreate(command)
+        val roomId = createRoomApplicationService.handleCreate(command)
 
         return roomId
     }
@@ -51,7 +63,7 @@ class ChatRoomController(
             newName = changeRoomNameRequestBody.name
         )
 
-        chatRoomApplicationService.handleChangeName(command)
+        changeRoomNameApplicationService.handleChangeName(command)
     }
 
     @PostMapping("/add_member")
@@ -65,7 +77,7 @@ class ChatRoomController(
             currentUserId = authorizationService.getCurrentUserId()
         )
 
-        chatRoomApplicationService.handleAddMember(command)
+        addMemberApplicationService.handleAddMember(command)
     }
 
     @PostMapping("/remove_member")
@@ -78,7 +90,7 @@ class ChatRoomController(
             currentUserId = authorizationService.getCurrentUserId()
         )
 
-        chatRoomApplicationService.handleRemoveMember(command)
+        removeMemberApplicationService.handleRemoveMember(command)
     }
 
     @PostMapping("/change_member_name")
@@ -92,6 +104,6 @@ class ChatRoomController(
             currentUserId = authorizationService.getCurrentUserId()
         )
 
-        chatRoomApplicationService.handleChangeMemberName(command)
+        changeMemberNameApplicationService.handleChangeMemberName(command)
     }
 }
