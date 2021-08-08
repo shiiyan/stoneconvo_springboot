@@ -33,8 +33,11 @@ class ChatRoom(
         const val MEMBERS_LIMIT = 30
     }
 
+    /*
+     * Room owner and room member can change room name
+     */
     fun changeName(newName: ChatRoomName, currentUserId: UserAccountId) {
-        if (!isMemberExist(currentUserId)) {
+        if (!isMemberExist(currentUserId) && !isOwner(currentUserId)) {
             throw CustomException.ChatRoomMemberNotExistException(
                 chatRoomId = id,
                 userAccountId = currentUserId
@@ -100,9 +103,9 @@ class ChatRoom(
     }
 
     /*
-     * if current user is the room owner, he can edit all room members.
-     * if current user is a room member, he can only edit himself.
-     * if current user doesn't belong to room, he can't edit any room member.
+     * If current user is the room owner, he can edit all room members.
+     * If current user is a room member, he can only edit himself.
+     * If current user doesn't belong to room, he can't edit any room member.
      */
     fun verifyAuthorityToEditMember(
         memberIdToEdit: UserAccountId,
@@ -113,7 +116,7 @@ class ChatRoom(
 
     private fun isMemberFull(): Boolean = members.size >= MEMBERS_LIMIT
 
-    private fun isOwner(userAccountId: UserAccountId): Boolean = owner == Administrator(userAccountId)
+    private fun isOwner(userAccountId: UserAccountId): Boolean = owner.id == userAccountId
 
     override fun toDto(): Dto = Dto(
         id = id.value,
