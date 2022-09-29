@@ -6,7 +6,7 @@ plugins {
 	id("org.jmailen.kotlinter") version "3.5.0"
 	id("nu.studer.jooq") version "5.2"
 	id("org.flywaydb.flyway") version "7.11.3"
-	kotlin("jvm") version "1.5.21"
+	kotlin("jvm") version "1.7.20"
 	kotlin("plugin.spring") version "1.5.21"
 }
 
