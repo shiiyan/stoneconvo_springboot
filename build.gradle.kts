@@ -7,7 +7,7 @@ plugins {
 	id("nu.studer.jooq") version "5.2"
 	id("org.flywaydb.flyway") version "7.11.3"
 	kotlin("jvm") version "1.5.21"
-	kotlin("plugin.spring") version "1.5.21"
+	kotlin("plugin.spring") version "1.8.10"
 }
 
 group = "com.stoneconvo"
